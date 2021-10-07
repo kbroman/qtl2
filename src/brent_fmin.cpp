@@ -73,6 +73,10 @@
     Minimization without Derivatives, Prentice-Hall, Inc. (1973).
 */
 /* changed name from Brent_fmin to qtl2_Brent_fmin */
+/* added attribute with clang to avoid clang-UBSAN warning on CRAN */
+#if defined(__clang__)
+__attribute__((no_sanitize("undefined-behavior"))
+#endif
 double qtl2_Brent_fmin(double ax, double bx, double (*f)(double, void *),
                        void *info, double tol)
 {
