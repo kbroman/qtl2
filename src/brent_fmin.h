@@ -9,7 +9,12 @@
 
 // see brent_fmin.cpp
 
-double qtl2_Brent_fmin(double ax, double bx, double (*f)(double, void *),
-                       void *info, double tol);
+/* add attribute with clang to avoid clang-UBSAN warning on CRAN */
+#if defined(__clang__)
+#define QTL2_NO_SANITIZE __attribute__((no_sanitize("undefined")))
+#endif
+
+double QTL2_NO_SANITIZE qtl2_Brent_fmin(double ax, double bx, double (*f)(double, void *),
+                                        void *info, double tol);
 
 #endif // BRENT_FMIN_H
