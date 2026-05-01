@@ -65,7 +65,7 @@
 #'
 #' # show LOD scores, controlling whether they go on the left or right
 #' plot_peaks(peaks, map, lod_labels=TRUE,
-#'            label_left=c(TRUE, TRUE, TRUE, FALSE, TRUE, FALSE))
+#'            label_left=c(TRUE, FALSE, TRUE, FALSE, TRUE, TRUE))
 plot_peaks <-
     function(peaks, map, chr=NULL, tick_height = 0.3,
              gap=NULL, lod_labels=FALSE, ...)

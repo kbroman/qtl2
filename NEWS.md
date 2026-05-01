@@ -1,4 +1,4 @@
-## qtl2 0.39-2 (2026-03-20)
+## qtl2 0.39-3 (2026-05-01)
 
 ### Minor changes
 
@@ -15,6 +15,8 @@
 
 - Small tweaks to tests of scan1coef with kinship matrix, to avoid
   test failures.
+
+- Small change to an example for `plot_peaks()` to fix label placement.
 
 
 ## qtl2 0.38 (2025-06-02)

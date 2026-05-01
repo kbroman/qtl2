@@ -85,7 +85,7 @@ plot_peaks(peaks, map, lod_labels=TRUE)
 
 # show LOD scores, controlling whether they go on the left or right
 plot_peaks(peaks, map, lod_labels=TRUE,
-           label_left=c(TRUE, TRUE, TRUE, FALSE, TRUE, FALSE))
+           label_left=c(TRUE, FALSE, TRUE, FALSE, TRUE, TRUE))
 }
 \seealso{
 \code{\link[=find_peaks]{find_peaks()}}, \code{\link[=plot_lodpeaks]{plot_lodpeaks()}}
