@@ -50,6 +50,21 @@ eff_via_lm <-
     result
 }
 
+# function to maybe swap NAs between 2nd and 3rd columns in 22nd row
+swap_nas <-
+    function(mat, row=22, col=2:3, also_se=TRUE)
+{
+    if(is.na(mat[row,col[1]]) && !is.na(mat[row, col[2]])) {
+        mat[row,col] <- mat[row,rev(col)]
+    }
+
+    if(also_se) {
+        attr(mat, "SE") <- swap_nas(attr(mat, "SE"), row, col, also_se=FALSE)
+    }
+
+    mat
+}
+
 test_that("scan1coef_pg for grav", {
 
     set.seed(9308594)
@@ -90,19 +105,24 @@ test_that("scan1coef_pg for grav", {
     # include covariate
     covar <- cbind(chr3=pr[["3"]][,2,"CC.266L"])
     est <- scan1coef(pr[,"3"], phe, K, covar, se=FALSE, zerosum=FALSE)
+    est <- swap_nas(est, also_se=FALSE)
     est_lm <- eff_via_lm(pr[["3"]], phe, K, covar)
+    est_lm <- swap_nas(est_lm)
     expect_equivalent(est, est_lm)
 
     est <- scan1coef(pr[,"3"], phe, K, covar, se=TRUE, zerosum=FALSE)
+    est <- swap_nas(est)
     expect_equivalent(est, est_lm)
     expect_equivalent(attr(est, "SE"), attr(est_lm, "SE"))
 
     # pre-computed eigen decomp
     est <- scan1coef(pr[,"3"], phe, Ke, covar, zerosum=FALSE)
-    expect_equivalent(est, est_lm)
+    est <- swap_nas(est, also_se=FALSE)
+    expect_equivalent(est, est_lm)  ## <- fix problem here
     est <- scan1coef(pr[,"3"], phe, Ke, covar, se=TRUE, zerosum=FALSE)
-    expect_equivalent(est, est_lm)
-    expect_equivalent(attr(est, "SE"), attr(est_lm, "SE"))
+    est <- swap_nas(est)
+    expect_equivalent(est, est_lm)  ## <- fix problem here
+    expect_equivalent(attr(est, "SE"), attr(est_lm, "SE"))  ## <- fix problem here
 
     # interactive covariate
     est <- scan1coef(pr[,"3"], phe, K, covar, intcovar=covar, se=FALSE, zerosum=FALSE)
@@ -125,22 +145,22 @@ test_that("scan1coef_pg for grav", {
     # two covariates
     covar <- cbind(covar, chr4=pr[["4"]][,2,"CD.329C-Col"])
     est <- scan1coef(pr[,"3"], phe, K, covar, se=FALSE, zerosum=FALSE)
+    est <- swap_nas(est, also_se=FALSE)
     est_lm <- eff_via_lm(pr[["3"]], phe, K, covar)
-    if((!is.na(est[22,3]) && is.na(est_lm[22,3])) || (is.na(est[22,3]) && !is.na(est_lm[22,3]))) {
-        # change which coefficient is NA due to collinearity
-        est_lm[22,2:3] <- est_lm[22,3:2]
-        attr(est_lm, "SE")[22,2:3] <- attr(est_lm, "SE")[22,3:2]
-    }
+    est_lm <- swap_nas(est_lm)
     expect_equivalent(est, est_lm)
 
     est <- scan1coef(pr[,"3"], phe, K, covar, se=TRUE, zerosum=FALSE)
+    est <- swap_nas(est)
     expect_equivalent(est, est_lm)
     expect_equivalent(attr(est, "SE"), attr(est_lm, "SE"))
 
     # pre-computed eigen decomp
     est <- scan1coef(pr[,"3"], phe, Ke, covar, zerosum=FALSE)
+    est <- swap_nas(est, also_se=FALSE)
     expect_equivalent(est, est_lm)
     est <- scan1coef(pr[,"3"], phe, Ke, covar, se=TRUE, zerosum=FALSE)
+    est <- swap_nas(est)
     expect_equivalent(est, est_lm)
     expect_equivalent(attr(est, "SE"), attr(est_lm, "SE"))
 
