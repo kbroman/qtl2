@@ -1,4 +1,4 @@
-#  grayplot
+#  grayplot (internal function taken from github.com/kbroman/broman)
 #
 # Scatterplot with a gray background
 #

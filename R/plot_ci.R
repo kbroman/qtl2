@@ -1,4 +1,4 @@
-#  plot_ci
+#  plot_ci (taken from broman::ciplot)
 #'
 #' Effect plot with multiple CIs for different groups
 #'
