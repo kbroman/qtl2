@@ -334,3 +334,7 @@ description: Annotated/categorized list of functions in R/qtl2
 
 
 ### Newly added functions (in development version)
+
+- `plot_ci` - Plot a set of confidence intervals (for example, of QTL effects at a fixed QTL position)
+- `dim.calc_genoprob` - Get dimensions of `"calc_genoprob"` object
+- `dimnames.calc_genoprob` - Get dimension names of `"calc_genoprob"` object
