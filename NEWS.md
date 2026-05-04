@@ -1,4 +1,4 @@
-## qtl2 0.39-4 (2026-05-04)
+## qtl2 0.40 (2026-05-04)
 
 ### New features
 
@@ -7,7 +7,7 @@
 
 ### Minor changes
 
-- In `src/matrix.cpp`, change `Rf_error()` to `Rcpp:stop()`. Issue #239
+- In `src/matrix.cpp`, change `Rf_error()` to `Rcpp:stop()`. (Issue #239)
 
 - Fixed a mistake in the documentation for `est_herit()` and
   `scan1()`. The model we use has covariance matrix
@@ -15,7 +15,7 @@
   the identity matrix, h^2 is the residual heritability, and sigma^2
   is the residual SD.
 
-- Export dim.calc_genoprob and dimnames.calc_genoprob to avoid some
+- Export `dim.calc_genoprob` and `dimnames.calc_genoprob` to avoid some
   warnings.
 
 - Small tweaks to tests of scan1coef with kinship matrix, to avoid

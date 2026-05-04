@@ -62,6 +62,6 @@ plot_ci(out_fit1$coef[1:3], out_fit1$SE[1:3],
 
 }
 \seealso{
-\code{\link[=plot_coef]{plot_coef()}}, \code{\link[=plot_pxg]{plot_pxg()}}
+\code{\link[=plot_coef]{plot_coef()}}, \code{\link[=plot_pxg]{plot_pxg()}}, \code{\link[=fit1]{fit1()}}, \code{\link[=pull_genoprobpos]{pull_genoprobpos()}}
 }
 \keyword{graphics}
