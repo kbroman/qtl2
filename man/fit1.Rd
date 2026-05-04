@@ -147,6 +147,10 @@ pr_max <- pull_genoprobpos(probs, map, max_pos$chr, max_pos$pos)
 # fit QTL model just at that position
 out_fit1 <- fit1(pr_max, pheno, addcovar=covar)
 
+# plot estimated effects
+plot_ci(out_fit1$coef[1:3], out_fit1$SE[1:3],
+        xlab="Genotype", ylab="QTL effects")
+
 }
 \references{
 Haley CS, Knott SA (1992) A simple
@@ -158,5 +162,5 @@ E (2008) Efficient control of population structure in model
 organism association mapping. Genetics 178:1709--1723.
 }
 \seealso{
-\code{\link[=pull_genoprobpos]{pull_genoprobpos()}}, \code{\link[=find_marker]{find_marker()}}
+\code{\link[=pull_genoprobpos]{pull_genoprobpos()}}, \code{\link[=find_marker]{find_marker()}}, \code{\link[=plot_ci]{plot_ci()}}
 }

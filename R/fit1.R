@@ -113,7 +113,11 @@
 #' # fit QTL model just at that position
 #' out_fit1 <- fit1(pr_max, pheno, addcovar=covar)
 #'
-#' @seealso [pull_genoprobpos()], [find_marker()]
+#' # plot estimated effects
+#' plot_ci(out_fit1$coef[1:3], out_fit1$SE[1:3],
+#'         xlab="Genotype", ylab="QTL effects")
+#'
+#' @seealso [pull_genoprobpos()], [find_marker()], [plot_ci()]
 #'
 #' @importFrom stats setNames
 #' @export

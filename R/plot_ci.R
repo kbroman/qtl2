@@ -43,7 +43,7 @@
 #' plot_ci(out_fit1$coef[1:3], out_fit1$SE[1:3],
 #'         xlab="Genotype chr 9 @ 56.6 cM", ylab="Spleen phenotype")
 #'
-#' @seealso [plot_coef()], [plot_pxg()]
+#' @seealso [plot_coef()], [plot_pxg()], [fit1()], [pull_genoprobpos()]
 #'
 #' @keywords
 #' graphics
