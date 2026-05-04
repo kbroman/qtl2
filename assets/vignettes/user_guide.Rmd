@@ -813,7 +813,7 @@ coefficient estimates are centered at the phenotype average.
 ```{r plot_scan1blup}
 par(mar=c(4.1, 4.1, 1.1, 2.6), las=1)
 col <- c("slateblue", "violetred", "green3")
-ylim <- range(c(c2blup, c2eff))+c(-1,1)
+ylim <- range(c(c2blup[,1:3], c2eff[,1:3]))+c(-1,1)
 plot(c2eff, map["2"], columns=1:3, col=col, ylab="Phenotype average", ylim=ylim,
      xlab="Chr 2 position")
 plot(c2blup, map["2"], columns=1:3, col=col, add=TRUE, lty=2)
@@ -843,6 +843,25 @@ for(i in seq(along=last_coef))
 ```
 
 
+### QTL effects at a fixed position
+
+To plot the estimated QTL effects at a fixed position, use
+`pull_genoprobpos()` to pull out the genotype probabilities at a fixed
+position, use `fit1()` to fit a single-QTL model with the QTL at that
+position, and `plot_ci()` to plot the confidence intervals for the QTL
+effects (as estimate &plusmn; 2 SE).
+
+We'll consider the liver QTL on chromosome 2, at position 56.8.
+
+```{r plot_qtleff_fixedpos}
+qtl_pr <- pull_genoprobpos(pr, map, chr=2, pos=56.8)
+out_fit1 <- fit1(qtl_pr, iron$pheno[,"liver"], se=TRUE)
+plot_ci(out_fit1$coef[1:3], out_fit1$SE[1:3], xlab="Genotype", ylab="QTL effects")
+```
+
+### Raw phenotypes vs genotypes
+
+
 Finally, to plot the raw phenotypes against the genotypes at a single
 putative QTL position, you can use the function `plot_pxg()`. This takes a vector of
 genotypes as produced by the `maxmarg()` function, which picks the most
@@ -853,10 +872,10 @@ argument `minprob`). Note that the "`marg`" in "`maxmarg`" stands for
 position that has maximum marginal probability.
 
 For example, we could get inferred genotypes at the chr 2 QTL for the
-liver phenotype (at 28.6 cM) as follows:
+liver phenotype (at 56.8 cM) as follows:
 
 ```{r maxmarg}
-g <- maxmarg(pr, map, chr=2, pos=28.6, return_char=TRUE)
+g <- maxmarg(pr, map, chr=2, pos=56.8, return_char=TRUE)
 ```
 
 We use `return_char=TRUE` to have `maxmarg()` return a vector of

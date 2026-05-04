@@ -249,6 +249,7 @@ description: Annotated/categorized list of functions in R/qtl2
 - [`plot_lodpeaks`](https://cran.r-project.org/web/packages/qtl2/refman/qtl2.html#plot_lodpeaks) - scatterplot of LOD scores vs QTL peak locations
   (possibly with intervals) for multiple traits
 - [`plot_pxg`](https://cran.r-project.org/web/packages/qtl2/refman/qtl2.html#plot_pxg) - plot phenotype versus QTL genotypes
+- [`plot_ci`](https://cran.r-project.org/web/packages/qtl2/refman/qtl2.html#plot_ci) - Plot a set of confidence intervals (for example, of QTL effects at a fixed QTL position)
 
 
 ### Diagnostic plots
@@ -321,6 +322,8 @@ description: Annotated/categorized list of functions in R/qtl2
   major allele in the founders
 - [`convert2cross2`](https://cran.r-project.org/web/packages/qtl2/refman/qtl2.html#convert2cross2) - convert an R/qtl1 `"cross"` object to the R/qtl2
   `"cross2"` format
+- `dim.calc_genoprob` - Get dimensions of `"calc_genoprob"` object
+- `dimnames.calc_genoprob` - Get dimension names of `"calc_genoprob"` object
 
 
 
@@ -334,7 +337,3 @@ description: Annotated/categorized list of functions in R/qtl2
 
 
 ### Newly added functions (in development version)
-
-- `plot_ci` - Plot a set of confidence intervals (for example, of QTL effects at a fixed QTL position)
-- `dim.calc_genoprob` - Get dimensions of `"calc_genoprob"` object
-- `dimnames.calc_genoprob` - Get dimension names of `"calc_genoprob"` object
