@@ -123,5 +123,5 @@ coef <- scan1coef(probs[,7], pheno, addcovar=covar)
 plot(coef, map[7], columns=1:3, col=c("slateblue", "violetred", "green3"))
 }
 \seealso{
-\link{CCcolors}, \code{\link[=plot_scan1]{plot_scan1()}}, \code{\link[=plot_snpasso]{plot_snpasso()}}
+\link{CCcolors}, \code{\link[=plot_scan1]{plot_scan1()}}, \code{\link[=plot_snpasso]{plot_snpasso()}}, \code{\link[=plot_ci]{plot_ci()}}
 }

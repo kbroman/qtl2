@@ -98,5 +98,5 @@ plot_pxg(geno, log10(iron$pheno[,1]), ylab=expression(log[10](Liver)),
          omit_points=TRUE, SEmult=2)
 }
 \seealso{
-\code{\link[=plot_coef]{plot_coef()}}
+\code{\link[=plot_coef]{plot_coef()}}, \code{\link[=plot_ci]{plot_ci()}}
 }

@@ -39,7 +39,7 @@
 #' for vertical grid lines. These are not included as formal
 #' parameters in order to avoid cluttering the function definition.
 #'
-#' @seealso [plot_coef()]
+#' @seealso [plot_coef()], [plot_ci()]
 #'
 #' @examples
 #' # read data

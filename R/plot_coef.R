@@ -39,7 +39,7 @@
 #' `columns=1:8` and using the Collaborative Cross colors,
 #' [CCcolors].
 #'
-#' @seealso [CCcolors], [plot_scan1()], [plot_snpasso()]
+#' @seealso [CCcolors], [plot_scan1()], [plot_snpasso()], [plot_ci()]
 #'
 #' @section Hidden graphics parameters:
 #' A number of graphics parameters can be passed via `...`. For

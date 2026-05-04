@@ -1,4 +1,9 @@
-## qtl2 0.39-3 (2026-05-01)
+## qtl2 0.39-4 (2026-05-04)
+
+### New features
+
+- Added function `plot_ci()` for plotting a set of confidence
+  intervals, such as for the QTL effects at a fixed QTL position.
 
 ### Minor changes
 
