@@ -7,4 +7,8 @@
 - [`iron`](iron), data from
   [Grant et al. (2006) Hepatology 44:174-185](https://www.ncbi.nlm.nih.gov/pubmed/16799992)
 
-- [`scripts`](scripts), R scripts that were used to generate the files
+- [`scripts`](scripts), R scripts that were used to generate the above
+  files
+
+- [`pqtl_data.RData`](pqtl_data.RData) - protein QTL results from
+  [Keele et al. (2026)](https://doi.org/10.1016/j.xgen.2025.101069)
