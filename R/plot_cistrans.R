@@ -99,7 +99,7 @@ plot_cistrans <-
                  mgp=NULL, mgp.x=NULL, mgp.y=NULL,
                  bgcolor="gray90", altbgcolor="gray80",
                  col=col, bg = bg, pch=pch, las=1, cex=cex,
-                 type="p", ...)
+                 xaxt="s", yaxt="s", type="p", ...)
     {
         # get x- and y-axis range
         if(is.null(xlim) || is.null(ylim)) {
@@ -130,8 +130,8 @@ plot_cistrans <-
                                                                    names(map)[i], mean(range(map[[i]], na.rm=TRUE))))
 
         for(i in seq_along(chr_midpt)) {
-            graphics::axis(side=1, at=chr_midpt[i], chr[i], mgp=mgp.x, tick=FALSE, las=las)
-            graphics::axis(side=2, at=chr_midpt[i], chr[i], mgp=mgp.y, tick=FALSE, las=las)
+            if(xaxt != "n") graphics::axis(side=1, at=chr_midpt[i], chr[i], mgp=mgp.x, tick=FALSE, las=las)
+            if(yaxt != "n") graphics::axis(side=2, at=chr_midpt[i], chr[i], mgp=mgp.y, tick=FALSE, las=las)
         }
         graphics::title(xlab=xlab, mgp=mgp.x)
         graphics::title(ylab=ylab, mgp=mgp.y)
