@@ -40,7 +40,7 @@
 #' load(tempfile)
 #' unlink(tempfile)
 #'
-#' plot_cistrans(qtl, map_endpoints, pheno_pos)
+#' plot_cistrans(qtl, map, pheno_pos)
 #' }
 
 plot_cistrans <-
