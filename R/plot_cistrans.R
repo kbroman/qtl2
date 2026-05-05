@@ -99,7 +99,7 @@ plot_cistrans <-
              xlab="", ylab="", xaxt="n", yaxt="n")
         chr <- names(map)
         chr_midpt <- sapply(seq_along(map), function(i) xpos_scan1(map, names(map), gap=gap,
-                                                                   names(map)[i], median(range(map[[i]], na.rm=TRUE))))
+                                                                   names(map)[i], mean(range(map[[i]], na.rm=TRUE))))
 
         for(i in seq_along(chr_midpt)) {
             graphics::axis(side=1, at=chr_midpt[i], chr[i], mgp=mgp.x, tick=FALSE, las=las)
