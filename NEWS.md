@@ -6,6 +6,10 @@
   pQTL analyses, with gene location on the y-axis and QTL location on
   the x-axis.
 
+- Added function `calc_hotspots()` for counting QTL in a sliding
+  window, to identify QTL hotspots, for example in eQTL/pQTL
+  experiments.
+
 
 ## qtl2 0.40 (2026-05-04)
 
