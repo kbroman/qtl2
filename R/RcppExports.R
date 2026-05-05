@@ -469,6 +469,10 @@ permute_ivector_stratified <- function(n_perm, x, strata, n_strata = -1L) {
     .Call(`_qtl2_reduce_markers`, pos, min_dist, weights)
 }
 
+.running_count <- function(pos, result_pos, window) {
+    .Call(`_qtl2_running_count`, pos, result_pos, window)
+}
+
 scan_binary_onechr <- function(genoprobs, pheno, addcovar, maxit = 100L, tol = 1e-6, qr_tol = 1e-12, eta_max = 30.0) {
     .Call(`_qtl2_scan_binary_onechr`, genoprobs, pheno, addcovar, maxit, tol, qr_tol, eta_max)
 }

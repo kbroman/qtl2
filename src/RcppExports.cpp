@@ -1672,6 +1672,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// running_count
+IntegerVector running_count(const NumericVector pos, const NumericVector result_pos, double window);
+RcppExport SEXP _qtl2_running_count(SEXP posSEXP, SEXP result_posSEXP, SEXP windowSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericVector >::type pos(posSEXP);
+    Rcpp::traits::input_parameter< const NumericVector >::type result_pos(result_posSEXP);
+    Rcpp::traits::input_parameter< double >::type window(windowSEXP);
+    rcpp_result_gen = Rcpp::wrap(running_count(pos, result_pos, window));
+    return rcpp_result_gen;
+END_RCPP
+}
 // scan_binary_onechr
 NumericMatrix scan_binary_onechr(const NumericVector& genoprobs, const NumericMatrix& pheno, const NumericMatrix& addcovar, const int maxit, const double tol, const double qr_tol, const double eta_max);
 RcppExport SEXP _qtl2_scan_binary_onechr(SEXP genoprobsSEXP, SEXP phenoSEXP, SEXP addcovarSEXP, SEXP maxitSEXP, SEXP tolSEXP, SEXP qr_tolSEXP, SEXP eta_maxSEXP) {
@@ -2549,6 +2562,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_qtl2_permute_nvector_stratified", (DL_FUNC) &_qtl2_permute_nvector_stratified, 4},
     {"_qtl2_permute_ivector_stratified", (DL_FUNC) &_qtl2_permute_ivector_stratified, 4},
     {"_qtl2_reduce_markers", (DL_FUNC) &_qtl2_reduce_markers, 3},
+    {"_qtl2_running_count", (DL_FUNC) &_qtl2_running_count, 3},
     {"_qtl2_scan_binary_onechr", (DL_FUNC) &_qtl2_scan_binary_onechr, 7},
     {"_qtl2_scan_binary_onechr_weighted", (DL_FUNC) &_qtl2_scan_binary_onechr_weighted, 8},
     {"_qtl2_scan_binary_onechr_intcovar_highmem", (DL_FUNC) &_qtl2_scan_binary_onechr_intcovar_highmem, 7},

@@ -59,8 +59,8 @@ calc_hotspots <-
     bychr_func <-
         function(chr)
     {
-        result <- sapply(map[[chr]], function(pos) sum(peaks$chr==chr & peaks$pos >= pos-window/2 &
-                                                       peaks$pos <= pos+window/2))
+        result <- .running_count(peaks$pos[peaks$chr==chr], map[[chr]], window)
+
         names(result) <- names(map[[chr]])
         result
     }
