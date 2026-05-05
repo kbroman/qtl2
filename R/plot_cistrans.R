@@ -97,7 +97,8 @@ plot_cistrans <-
                  ylab="Gene position", xlim=NULL, ylim=NULL,
                  mgp=NULL, mgp.x=NULL, mgp.y=NULL,
                  bgcolor="gray90", altbgcolor="gray80",
-                 col=col, bg = bg, pch=pch, las=1, cex=cex, ...)
+                 col=col, bg = bg, pch=pch, las=1, cex=cex,
+                 type="p", ...)
     {
         # get x- and y-axis range
         if(is.null(xlim) || is.null(ylim)) {
@@ -150,8 +151,10 @@ plot_cistrans <-
         cis <- (!is.na(peaks$chr.x) & !is.na(peaks$chr.y) & !is.na(peaks$pos.x) & !is.na(peaks$pos.y) &
                 peaks$chr.x == peaks$chr.y & abs(peaks$pos.x - peaks$pos.y) < cis_window)
 
-        if(any(!cis)) points(peaks$xpos[!cis], peaks$ypos[!cis], pch=pch, bg=bg, col=col, cex=cex, ...)
-        if(any(cis)) points(peaks$xpos[cis], peaks$ypos[cis], pch=pch_cis, bg=bg_cis, col=col_cis, cex=cex_cis, ...)
+        if(type != "n") {
+            if(any(!cis)) points(peaks$xpos[!cis], peaks$ypos[!cis], pch=pch, bg=bg, col=col, cex=cex, ...)
+            if(any(cis)) points(peaks$xpos[cis], peaks$ypos[cis], pch=pch_cis, bg=bg_cis, col=col_cis, cex=cex_cis, ...)
+        }
 
         peaks$cis <- cis
         invisible(peaks)
