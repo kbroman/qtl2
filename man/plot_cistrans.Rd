@@ -12,6 +12,15 @@ plot_cistrans(
   pty = "s",
   bgcolor = "gray90",
   altbgcolor = "gray80",
+  pch = 21,
+  col = "slateblue",
+  bg = "slateblue",
+  cex = 0.8,
+  pch_cis = 21,
+  col_cis = "violetred",
+  bg_cis = "violetred",
+  cex_cis = 0.8,
+  cis_window = 1,
   ...
 )
 }
@@ -34,10 +43,32 @@ the phenotypes in \code{peaks}. Should contain columns \code{pheno},
 
 \item{altbgcolor}{Alternate background color for chromosome rectangles}
 
+\item{pch}{Point type for "trans" points}
+
+\item{col}{Point color for "trans" points}
+
+\item{bg}{Background color for "trans" points}
+
+\item{cex}{Character expansion size for "trans" points}
+
+\item{pch_cis}{Point type for "cis" points}
+
+\item{col_cis}{Point color for "cis" points}
+
+\item{bg_cis}{Background color for "cis" points}
+
+\item{cex_cis}{Character expansion size for "cis" points}
+
+\item{cis_window}{Window size that defines cis-QTL (on same
+chromosome, and position of gene within this distance of QTL
+position)}
+
 \item{...}{Additional graphics arguments passed to \code{\link[graphics:points]{graphics::points()}}}
 }
 \value{
-None
+Invisibly returns a data frame with \code{peaks} merged with
+\code{pheno_pos}, with an additional column \code{cis} that indicates
+which QTL appear to be cis (vs trans).
 }
 \description{
 Scatterplot of gene location vs QTL location to display eQTL/pQTL results
@@ -52,7 +83,7 @@ download.file(url, tempfile)
 load(tempfile)
 unlink(tempfile)
 
-plot_cistrans(qtl, map, pheno_pos)
+plot_cistrans(qtl, map, pheno_pos, cis_window=5)
 }
 }
 \seealso{

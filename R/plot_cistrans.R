@@ -20,9 +20,31 @@
 #'
 #' @param altbgcolor Alternate background color for chromosome rectangles
 #'
+#' @param pch Point type for "trans" points
+#'
+#' @param col Point color for "trans" points
+#'
+#' @param bg Background color for "trans" points
+#'
+#' @param cex Character expansion size for "trans" points
+#'
+#' @param pch_cis Point type for "cis" points
+#'
+#' @param col_cis Point color for "cis" points
+#'
+#' @param bg_cis Background color for "cis" points
+#'
+#' @param cex_cis Character expansion size for "cis" points
+#'
+#' @param cis_window Window size that defines cis-QTL (on same
+#'     chromosome, and position of gene within this distance of QTL
+#'     position)
+#'
 #' @param ... Additional graphics arguments passed to [graphics::points()]
 #'
-#' @return None
+#' @return Invisibly returns a data frame with `peaks` merged with
+#'     `pheno_pos`, with an additional column `cis` that indicates
+#'     which QTL appear to be cis (vs trans).
 #'
 #' @seealso [plot_scan1()], [find_peaks()], [plot_lodpeaks()]
 #'
@@ -40,12 +62,15 @@
 #' load(tempfile)
 #' unlink(tempfile)
 #'
-#' plot_cistrans(qtl, map, pheno_pos)
+#' plot_cistrans(qtl, map, pheno_pos, cis_window=5)
 #' }
 
 plot_cistrans <-
     function(peaks, map, pheno_pos, gap=0, pty="s",
-             bgcolor="gray90", altbgcolor="gray80", ...)
+             bgcolor="gray90", altbgcolor="gray80",
+             pch=21, col="slateblue", bg="slateblue", cex=0.8,
+             pch_cis=21, col_cis="violetred", bg_cis="violetred", cex_cis=0.8,
+             cis_window=1, ...)
 {
     # check that peaks conforms to expectations
     if(!is.data.frame(peaks) || !all(c("lodcolumn", "chr", "pos") %in% colnames(peaks)))
@@ -71,7 +96,8 @@ plot_cistrans <-
         function(peaks, map, pheno_pos, gap=0, pty="s", xlab="QTL position",
                  ylab="Gene position", xlim=NULL, ylim=NULL,
                  mgp=NULL, mgp.x=NULL, mgp.y=NULL,
-                 col="slateblue", bg = "slateblue", pch=21, las=1, cex=1, ...)
+                 bgcolor="gray90", altbgcolor="gray80",
+                 col=col, bg = bg, pch=pch, las=1, cex=cex, ...)
     {
         # get x- and y-axis range
         if(is.null(xlim) || is.null(ylim)) {
@@ -121,9 +147,18 @@ plot_cistrans <-
         }
 
         # plot points
-        points(peaks$xpos, peaks$ypos, pch=pch, bg=bg, col=col, cex=cex)
+        cis <- (!is.na(peaks$chr.x) & !is.na(peaks$chr.y) & !is.na(peaks$pos.x) & !is.na(peaks$pos.y) &
+                peaks$chr.x == peaks$chr.y & abs(peaks$pos.x - peaks$pos.y) < cis_window)
 
+        if(any(!cis)) points(peaks$xpos[!cis], peaks$ypos[!cis], pch=pch, bg=bg, col=col, cex=cex, ...)
+        if(any(cis)) points(peaks$xpos[cis], peaks$ypos[cis], pch=pch_cis, bg=bg_cis, col=col_cis, cex=cex_cis, ...)
+
+        peaks$cis <- cis
+        invisible(peaks)
     }
 
-    plot_cistrans_internal(peaks, map, pheno_pos, gap=0, pty="s", ...)
+    plot_cistrans_internal(peaks, map, pheno_pos, gap=0, pty="s",
+                           bgcolor=bgcolor, altbgcolor=altbgcolor,
+                           pch=pch, cex=cex, bg=bg, col=col,
+                           ...)
 }
