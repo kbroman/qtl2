@@ -160,7 +160,7 @@ plot_cistrans <-
         invisible(peaks)
     }
 
-    plot_cistrans_internal(peaks, map, pheno_pos, gap=0, pty="s",
+    plot_cistrans_internal(peaks, map, pheno_pos, gap=0, pty=pty,
                            bgcolor=bgcolor, altbgcolor=altbgcolor,
                            pch=pch, cex=cex, bg=bg, col=col,
                            ...)
