@@ -140,11 +140,13 @@ plot_cistrans <-
         chrstart <- xpos_scan1(map, gap=gap, thechr=names(map), thepos=sapply(map, min))
         chrend <- xpos_scan1(map, gap=gap, thechr=names(map), thepos=sapply(map, max))
 
+        rect(min(chrstart), min(chrstart), max(chrend), max(chrend), col=bgcolor, border=NA)
         for(chri in seq_along(map)) {
             for(chrj in seq_along(map)) {
-                rectcolor <- c(bgcolor, altbgcolor)[(chri + chrj) %% 2 + 1]
-                rect(chrstart[chri], chrstart[chrj], chrend[chri], chrend[chrj],
-                     col=rectcolor, border=NA)
+                if((chri+chrj) %% 2 == 1) {
+                    rect(chrstart[chri], chrstart[chrj], chrend[chri], chrend[chrj],
+                         col=altbgcolor, border=NA)
+                }
             }
         }
 
