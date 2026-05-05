@@ -1,3 +1,12 @@
+## qtl2 0.41-1 (2026-05-04)
+
+### New features
+
+- Added function `plot_cistrans()` for plotting the results of eQTL or
+  pQTL analyses, with gene location on the y-axis and QTL location on
+  the x-axis.
+
+
 ## qtl2 0.40 (2026-05-04)
 
 ### New features

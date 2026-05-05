@@ -15,7 +15,7 @@
 #' @param intervals If TRUE and `peaks` contains QTL intervals, plot the intervals.
 #' @param ... Additional graphics parameters
 #'
-#' @seealso [find_peaks()], [plot_peaks()]
+#' @seealso [find_peaks()], [plot_peaks()], [plot_cistrans()]
 #'
 #' @section Hidden graphics parameters:
 #' A number of graphics parameters can be passed via `...`. For
