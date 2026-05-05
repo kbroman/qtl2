@@ -10,5 +10,10 @@
 - [`scripts`](scripts), R scripts that were used to generate the above
   files
 
+
+### Other sample data
+
 - [`pqtl_data.RData`](pqtl_data.RData) - protein QTL results from
   [Keele et al. (2026)](https://doi.org/10.1016/j.xgen.2025.101069)
+
+  Plot with `plot_cistrans(qtl, map_endpoints, pheno_pos)
