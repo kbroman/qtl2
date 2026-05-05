@@ -37,7 +37,8 @@ the phenotypes in \code{peaks}. Should contain columns \code{pheno},
 
 \item{gap}{Gap between chromosomes in the plot}
 
-\item{pty}{Plot type (generally "s" to force a square plot)}
+\item{pty}{Plot type; the default "s" forces a square plot; use "m"
+to use the maximal plotting region.}
 
 \item{bgcolor}{Background color for chromosome rectangles}
 

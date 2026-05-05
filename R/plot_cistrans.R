@@ -14,7 +14,8 @@
 #'
 #' @param gap Gap between chromosomes in the plot
 #'
-#' @param pty Plot type (generally "s" to force a square plot)
+#' @param pty Plot type; the default "s" forces a square plot; use "m"
+#'     to use the maximal plotting region.
 #'
 #' @param bgcolor Background color for chromosome rectangles
 #'
