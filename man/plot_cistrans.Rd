@@ -49,10 +49,6 @@ Scatterplot of gene location vs QTL location to display eQTL/pQTL results
 download.file("https://kbroman.org/qtl2/assets/sampledata/pqtl_data.RData", "pqtl_data.RData")
 load("pqtl_data.RData")
 
-# adjust pheno_pos
-pheno_pos$pheno <- pheno_pos$uniprot_id
-pheno_pos$pos <- (pheno_pos$start + pheno_pos$end)/2
-
 plot_cistrans(qtl, map_endpoints, pheno_pos)
 }
 }
