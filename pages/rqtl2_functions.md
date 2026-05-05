@@ -338,3 +338,4 @@ description: Annotated/categorized list of functions in R/qtl2
 
 ### Newly added functions (in development version)
 - `plot_cistrans` - scatterplot of gene location vs QTL location to display eQTL/pQTL results
+- `calc_hotspots` - count QTL in a sliding window, to identify QTL hotspots
