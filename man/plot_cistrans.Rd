@@ -46,8 +46,11 @@ Scatterplot of gene location vs QTL location to display eQTL/pQTL results
 \dontrun{
 # download example pQTL results (from Keele et al. 2026, https://doi.org/10.1016/j.xgen.2025.101069)
 # contains qtl, map_endpoints, and pheno_pos
-download.file("https://kbroman.org/qtl2/assets/sampledata/pqtl_data.RData", "pqtl_data.RData")
-load("pqtl_data.RData")
+url <- "https://kbroman.org/qtl2/assets/sampledata/pqtl_data.RData"
+tempfile <- file.path(tempdir(), basename(url))
+download.file(url, tempfile)
+load(tempfile)
+unlink(tempfile)
 
 plot_cistrans(qtl, map_endpoints, pheno_pos)
 }
