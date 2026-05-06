@@ -9,9 +9,7 @@ plot_cistrans(
   map,
   pheno_pos,
   gap = 0,
-  pty = "s",
-  bgcolor = "gray90",
-  altbgcolor = "gray80",
+  cis_window = 1,
   pch = 21,
   col = "slateblue",
   bg = "slateblue",
@@ -20,7 +18,9 @@ plot_cistrans(
   col_cis = "violetred",
   bg_cis = "violetred",
   cex_cis = 0.8,
-  cis_window = 1,
+  pty = "s",
+  bgcolor = "gray90",
+  altbgcolor = "gray80",
   ...
 )
 }
@@ -37,12 +37,9 @@ the phenotypes in \code{peaks}. Should contain columns \code{pheno},
 
 \item{gap}{Gap between chromosomes in the plot}
 
-\item{pty}{Plot type; the default "s" forces a square plot; use "m"
-to use the maximal plotting region.}
-
-\item{bgcolor}{Background color for chromosome rectangles}
-
-\item{altbgcolor}{Alternate background color for chromosome rectangles}
+\item{cis_window}{Window size that defines cis-QTL (on same
+chromosome, and position of gene within this distance of QTL
+position)}
 
 \item{pch}{Point type for "trans" points}
 
@@ -60,9 +57,12 @@ to use the maximal plotting region.}
 
 \item{cex_cis}{Character expansion size for "cis" points}
 
-\item{cis_window}{Window size that defines cis-QTL (on same
-chromosome, and position of gene within this distance of QTL
-position)}
+\item{pty}{Plot type; the default "s" forces a square plot; use "m"
+to use the maximal plotting region.}
+
+\item{bgcolor}{Background color for chromosome rectangles}
+
+\item{altbgcolor}{Alternate background color for chromosome rectangles}
 
 \item{...}{Additional graphics arguments passed to \code{\link[graphics:points]{graphics::points()}}}
 }
@@ -77,7 +77,7 @@ Scatterplot of gene location vs QTL location to display eQTL/pQTL results
 \examples{
 \dontrun{
 # download example pQTL results (from Keele et al. 2026, https://doi.org/10.1016/j.xgen.2025.101069)
-# contains qtl, map_endpoints, and pheno_pos
+# contains qtl, map, and pheno_pos
 url <- "https://kbroman.org/qtl2/assets/sampledata/pqtl_data.RData"
 tempfile <- file.path(tempdir(), basename(url))
 download.file(url, tempfile)

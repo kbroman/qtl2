@@ -14,12 +14,9 @@
 #'
 #' @param gap Gap between chromosomes in the plot
 #'
-#' @param pty Plot type; the default "s" forces a square plot; use "m"
-#'     to use the maximal plotting region.
-#'
-#' @param bgcolor Background color for chromosome rectangles
-#'
-#' @param altbgcolor Alternate background color for chromosome rectangles
+#' @param cis_window Window size that defines cis-QTL (on same
+#'     chromosome, and position of gene within this distance of QTL
+#'     position)
 #'
 #' @param pch Point type for "trans" points
 #'
@@ -37,9 +34,12 @@
 #'
 #' @param cex_cis Character expansion size for "cis" points
 #'
-#' @param cis_window Window size that defines cis-QTL (on same
-#'     chromosome, and position of gene within this distance of QTL
-#'     position)
+#' @param pty Plot type; the default "s" forces a square plot; use "m"
+#'     to use the maximal plotting region.
+#'
+#' @param bgcolor Background color for chromosome rectangles
+#'
+#' @param altbgcolor Alternate background color for chromosome rectangles
 #'
 #' @param ... Additional graphics arguments passed to [graphics::points()]
 #'
@@ -56,7 +56,7 @@
 #' @examples
 #' \dontrun{
 #' # download example pQTL results (from Keele et al. 2026, https://doi.org/10.1016/j.xgen.2025.101069)
-#' # contains qtl, map_endpoints, and pheno_pos
+#' # contains qtl, map, and pheno_pos
 #' url <- "https://kbroman.org/qtl2/assets/sampledata/pqtl_data.RData"
 #' tempfile <- file.path(tempdir(), basename(url))
 #' download.file(url, tempfile)
@@ -67,11 +67,10 @@
 #' }
 
 plot_cistrans <-
-    function(peaks, map, pheno_pos, gap=0, pty="s",
-             bgcolor="gray90", altbgcolor="gray80",
+    function(peaks, map, pheno_pos, gap=0, cis_window=1,
              pch=21, col="slateblue", bg="slateblue", cex=0.8,
              pch_cis=21, col_cis="violetred", bg_cis="violetred", cex_cis=0.8,
-             cis_window=1, ...)
+             pty="s", bgcolor="gray90", altbgcolor="gray80", ...)
 {
     # check that peaks conforms to expectations
     if(!is.data.frame(peaks) || !all(c("lodcolumn", "chr", "pos") %in% colnames(peaks)))
