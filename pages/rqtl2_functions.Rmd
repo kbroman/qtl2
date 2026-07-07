@@ -127,6 +127,7 @@ output:
 - [`est_herit`](https://cran.r-project.org/web/packages/qtl2/refman/qtl2.html#est_herit) - estimate heritability with linear mixed model
 - [`fit1`](https://cran.r-project.org/web/packages/qtl2/refman/qtl2.html#fit1) - fit a single-QTL model at a single position
 - [`scan1`](https://cran.r-project.org/web/packages/qtl2/refman/qtl2.html#scan1) - genome scan with a single-QTL model
+- [`scan1gen`](https://cran.r-project.org/web/packages/qtl2/refman/qtl2.html#scan1gen) - General genome scan with user-supplied fitting function
 - [`scan1perm`](https://cran.r-project.org/web/packages/qtl2/refman/qtl2.html#scan1perm) - permutation test to establish statistical significance
   in genome scan
 - [`scan1coef`](https://cran.r-project.org/web/packages/qtl2/refman/qtl2.html#scan1coef) - calculate QTL effects in scan along one chromosome
@@ -134,6 +135,7 @@ output:
   effects as random and calculating BLUPs
 - [`scan1snps`](https://cran.r-project.org/web/packages/qtl2/refman/qtl2.html#scan1snps) - single-QTL scan over SNPs in a multi-parent population
 - [`scan1max`](https://cran.r-project.org/web/packages/qtl2/refman/qtl2.html#scan1max) - genome-wide maximum LOD score from genome scan
+
 
 
 ### QTL summaries
@@ -352,5 +354,3 @@ output:
 
 
 ### Newly added functions (in development version)
-
-- `scan1gen` - General genome scan with user-supplied fitting function <!-- QTL analysis -->
