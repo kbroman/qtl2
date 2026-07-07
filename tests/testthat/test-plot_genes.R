@@ -21,6 +21,6 @@ test_that("plot_genes works", {
     # try again with the genes in a different order
     genes <- genes[c(8,5,4,6,2,3,7,1),]
 
-    expect_doppelganger("plot_genes", test_plot_genes)
+    expect_doppelganger("plot_genes_2", test_plot_genes)
 
 })
