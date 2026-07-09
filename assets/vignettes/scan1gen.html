@@ -1593,11 +1593,13 @@ plot(out_logit - out_scan1, map, ylim=c(-0.05,0.05),
 <p>To perform a permutation test, to establish statistical significance,
 use the R/qtl2 function <code>scan1perm</code>. We’ve added an argument
 <code>scan_func</code> so that <code>scan1perm</code> can be used with
-generally scanning functions like <code>scan1gen</code> (and also <a href="https://cran.r-project.org/web/packages/qtl2/refman/qtl2.html#scan1snps"><code>scan1snps</code></a>).</p>
-<p>To do the permutation test, we can <code>scan1perm</code> with
+general scanning functions like <code>scan1gen</code> (and also <a href="https://cran.r-project.org/web/packages/qtl2/refman/qtl2.html#scan1snps"><code>scan1snps</code></a>;
+see below).</p>
+<p>To do the permutation test, we call <code>scan1perm</code> with
 <code>scan_func=scan1gen</code> and <code>func=ll_glm</code> (which gets
-passed along to <code>scan1gen</code>).</p>
-<pre class="r"><code>operm &lt;- scan1perm(probs, bin_pheno, Xcovar=Xcovar, n_perm=100,
+passed along to <code>scan1gen</code>). Here we will seek separate
+autosome and X-chromosome significance thresholds.</p>
+<pre class="r"><code>operm &lt;- scan1perm(probs, bin_pheno, Xcovar=Xcovar, n_perm=1000,
                    perm_Xsp=TRUE, scan_func=scan1gen, func=ll_glm,
                    chr_lengths=chr_lengths(map), cores=0)</code></pre>
 <p>Here are the 5% significance thresholds for the autosomes and X
