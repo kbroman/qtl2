@@ -196,6 +196,7 @@ par(mar=c(5.1,4.1,0.6,0.6))
 plot(out_0infl, map)
 ```
 
+
 ## sommer package
 
 As a third example, let's fit a random effects model for the QTL
