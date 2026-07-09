@@ -1,0 +1,168 @@
+---
+title: scan1gen tutorial
+output:
+    html_document:
+        toc: true
+        toc_depth: 2
+        toc_float: true
+---
+
+```{r knitr_opts, include=FALSE}
+knitr::opts_chunk$set(fig.width=9, fig.height=5, warning=FALSE, message=FALSE)
+options(width=127, digits=5)
+```
+
+In [R/qtl2](https://kbroman.org/qtl2) version
+[0.44](https://github.com/rqtl/qtl2/releases/tag/0.44), we introduced
+the function
+[`scan1gen`](https://cran.r-project.org/web/packages/qtl2/refman/qtl2.html#scan1gen)
+for performing a general genome scan with a user-supplied fitting
+function. We also modified
+[`scan1perm`](https://cran.r-project.org/web/packages/qtl2/refman/qtl2.html#scan1perm),
+for permutation tests to establish statistical significance, so that
+it can take alternative scanning functions, including
+[`scan1gen`](https://cran.r-project.org/web/packages/qtl2/refman/qtl2.html#scan1gen)
+and
+[`scan1snps`](https://cran.r-project.org/web/packages/qtl2/refman/qtl2.html#scan1snps).
+
+In this document, we'll illustrate the use of these functions with a
+few examples.
+
+
+The R/qtl2 function
+[`scan1`](https://cran.r-project.org/web/packages/qtl2/refman/qtl2.html#scan1)
+is used to scan the genome, fitting a single-QTL model at each
+location, and comparing it to a NULL model (with no QTL). The output
+is a matrix of LOD scores, where the rows correspond to genomic
+positions and the columns correspond to phenotypes.
+But the available models are limited: you can fit a normal linear
+regression model, with or without a residual polygenic effect, or for
+binary traits a logistic regression model (with no residual polygenic
+effect allowed).
+
+The function
+[`scan1gen`](https://cran.r-project.org/web/packages/qtl2/refman/qtl2.html#scan1gen)
+helps to extend this to general phenotype models. The user provides a
+function that takes as input the genotype probabilities and
+phenotypes, and potentially also additive covariates, interactive
+covariates, and a kinship matrix, and returns a LOD score.
+The [`scan1gen`](https://cran.r-project.org/web/packages/qtl2/refman/qtl2.html#scan1gen)
+function then applies this to each position in the genome.
+
+## Generalized linear model
+
+As a first example, let's suppose we wanted to fit a generalized
+linear model for a binary phenotype, but with a probit link rather
+than a logit. We could use the R function `glm()`, as in the following.
+(Note that we allow just additive covariates.)
+
+```{r, ll_glm}
+ll_glm <-
+function(pr, pheno, addcovar=NULL, ...)
+{
+    formula <- ifelse(is.null(pr), "pheno ~ 1", "pheno ~ pr")
+    if(!is.null(addcovar)) formula <- paste(formula, "+ addcovar")
+
+    glm_out <- glm(as.formula(formula), family=binomial(link=probit))
+
+    -glm_out$deviance/(2*log(10)) # log10 likelihood
+}
+```
+
+Let's now use this function in `scan1gen`. First we load and prepare
+the `iron` dataset included with R/qtl2.
+
+```{r, prepare_iron_data}
+# load R/qtl2
+library(qtl2)
+
+# read data
+iron <- read_cross2(system.file("extdata", "iron.zip", package="qtl2"))
+
+# insert pseudomarkers into map
+map <- insert_pseudomarkers(iron$gmap, step=1)
+
+# calculate genotype probabilities
+probs <- calc_genoprob(iron, map, error_prob=0.002)
+
+# covariates for X chr under null
+Xcovar <- get_x_covar(iron)
+
+# create binary trait
+bin_pheno <- setNames(as.numeric(iron$pheno[,1] > median(iron$pheno[,1])),
+                      rownames(iron$pheno))
+```
+
+We run `scan1gen` much like `scan1`:
+
+```{r scan1gen_glm}
+out_probit <- scan1gen(probs, bin_pheno, Xcovar=Xcovar, func=ll_glm)
+```
+
+Compare this to the output of `scan1` with a logit model. The results
+are very small.
+
+```{r iron_scan1}
+out_scan1 <- scan1(probs, bin_pheno, Xcovar=Xcovar, model="binary")
+
+par(mar=c(4.1,4.1,0.6,0.6))
+plot(out_probit - out_scan1, map, ylim=c(-0.05,0.05),
+     ylab="LOD difference (probit - logit)")
+```
+
+We could also try using `glm()` with a logit link, to see whether it
+gives the same results as `scan1()`.
+
+
+```{r glm_logit}
+ll_glm_logit <-
+function(pr, pheno, addcovar=NULL, ...)
+{
+    formula <- ifelse(is.null(pr), "pheno ~ 1", "pheno ~ pr")
+    if(!is.null(addcovar)) formula <- paste(formula, "+ addcovar")
+
+    glm_out <- glm(as.formula(formula), family=binomial(link=logit))
+
+    -glm_out$deviance/(2*log(10)) # log10 likelihood
+}
+
+out_logit <- scan1gen(probs, bin_pheno, Xcovar=Xcovar, func=ll_glm_logit)
+
+par(mar=c(4.1,4.1,0.6,0.6))
+plot(out_logit - out_scan1, map, ylim=c(-0.05,0.05),
+     ylab="LOD difference (glm - scan1)")
+```
+
+
+
+
+## Zero-inflated Poisson regression
+
+As a second example, let's do a scan with a zero-inflated Poisson
+regression model, using the function `zeroinfl` in the
+[pscl](https://cran.r-project.org/package=pscl) package.
+
+
+## sommer package
+
+As a third example, let's fit a random effects model for the QTL
+effect, using the [sommer](https://cran.r-project.org/package=sommer)
+package.
+
+
+## Permutation tests
+
+Let's now turn to the use of permutation tests with general scan
+functions. The R/qtl2 function `scan1perm` is analogous to `scan1` but
+performs repeated scans with different permutations of the genotypes
+relative to the phenotypes, saving the genome-wide maximum of each.
+We have introduced an argument `scan_func` for using genome scan
+functions other than `scan1`. In particular, it can be used with
+`scan1snps` and with `scan1gen`.
+
+
+
+---
+
+[![CC BY](https://i.creativecommons.org/l/by/3.0/88x31.png)](https://creativecommons.org/licenses/by/3.0/)
+[Karl Broman](https://kbroman.org)
