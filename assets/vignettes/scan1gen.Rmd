@@ -96,7 +96,7 @@ bin_pheno <- setNames(as.numeric(iron$pheno[,1] > median(iron$pheno[,1])),
 We run `scan1gen` much like `scan1`:
 
 ```{r scan1gen_glm}
-out_probit <- scan1gen(probs, bin_pheno, Xcovar=Xcovar, func=ll_glm)
+out_probit <- scan1gen(probs, bin_pheno, Xcovar=Xcovar, func=ll_glm, cores=0)
 ```
 
 Compare this to the output of `scan1` with a logit model. The results
@@ -126,7 +126,7 @@ function(pr, pheno, addcovar=NULL, ...)
     -glm_out$deviance/(2*log(10)) # log10 likelihood
 }
 
-out_logit <- scan1gen(probs, bin_pheno, Xcovar=Xcovar, func=ll_glm_logit)
+out_logit <- scan1gen(probs, bin_pheno, Xcovar=Xcovar, func=ll_glm_logit, cores=0)
 
 par(mar=c(4.1,4.1,0.6,0.6))
 plot(out_logit - out_scan1, map, ylim=c(-0.05,0.05),
@@ -142,6 +142,59 @@ As a second example, let's do a scan with a zero-inflated Poisson
 regression model, using the function `zeroinfl` in the
 [pscl](https://cran.r-project.org/package=pscl) package.
 
+Let's start with our fitting function:
+
+```{r fit0infl}
+fit0infl <-
+function(probs, pheno, addcovar=NULL, ...)
+{
+    formula <- ifelse(is.null(probs), "pheno~1", "pheno~probs")
+    if(!is.null(addcovar)) formula <- paste(formula, "+ addcovar")
+
+    pscl::zeroinfl(as.formula(formula))$loglik/log(10)
+}
+```
+
+To illustrate the function, let's simulate some F2 data.
+Our model has two QTL, with one QTL affecting the proportion of
+individuals with 0 phenotype, and the other affecting the average
+phenotype for those with non-zero phenotype.
+
+```{r simulate_f2_data}
+library(qtl)
+
+set.seed(20260613)
+data(map10)
+n <- 250
+f2 <- sim.cross(map10, model=rbind(c(2, 45, 1, 0), c(5, 65, 1, 1)),
+                n.ind=n, type="f2")
+
+f2$pheno[,1] <- rbinom(nind(f2), 1, p=c(0.8, 0.6, 0.4)[f2$qtlgeno[,1]])
+f2$pheno[,2] <- f2$pheno[,1]
+nonzero <- (f2$pheno[,1]>0)
+f2$pheno[nonzero,2] <- rpois(sum(nonzero), c(6,4,2)[f2$qtlgeno[nonzero,2]])
+
+f2$pheno$sex <- factor(rep("male", n))
+colnames(f2$pheno) <- c("zero", "count", "sex")
+
+f2 <- convert2cross2(f2)
+```
+
+We can run the genome scan as follows:
+
+```{r scan1_0infl}
+map <- insert_pseudomarkers(f2$gmap, step=1)
+pr <- calc_genoprob(f2, map, err=0)
+
+out_0infl <- scan1gen(pr, f2$pheno[,"count"], func=fit0infl, cores=0)
+```
+
+Here's a plot of the results:
+
+```{r plot_scan1_0infl}
+par(mar=c(5.1,4.1,0.6,0.6))
+plot(out_0infl, map)
+```
 
 ## sommer package
 
