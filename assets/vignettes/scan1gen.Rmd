@@ -203,6 +203,13 @@ effect, using the [sommer](https://cran.r-project.org/package=sommer)
 package.
 
 
+## regress package
+
+We can also try using the
+[regress](https://cran.r-project.org/package=regress) package.
+
+
+
 ## Permutation tests
 
 Let's now turn to the use of permutation tests with general scan
