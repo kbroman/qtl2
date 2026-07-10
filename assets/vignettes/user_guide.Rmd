@@ -925,7 +925,7 @@ the directory
 [`DOex`](https://github.com/rqtl/qtl2data/tree/main/DOex) contains a
 reduced set, with just three chromosomes, one phenotype
 (`OF_immobile_pct`, percent immobile in the open field test), and a
-reduced set of markers.
+reduced set of markers.)
 
 You can download the data from a single zip file, as follows:
 
