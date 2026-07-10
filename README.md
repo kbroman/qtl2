@@ -5,8 +5,6 @@
 [![r-universe badge](https://rqtl.r-universe.dev/qtl2/badges/version)](https://rqtl.r-universe.dev/qtl2)
 [![zenodo DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3237772.svg)](https://doi.org/10.5281/zenodo.3237772)
 
-[Karl Broman](https://kbroman.org)
-
 [R/qtl2](https://kbroman.org/qtl2/) (aka qtl2) is a reimplementation of
 the QTL analysis software [R/qtl](https://rqtl.org), to better handle
 high-dimensional data and complex cross designs.
@@ -24,7 +22,24 @@ probabilities on disk), and [qtl2ggplot](https://github.com/byandell-sysgen/qtl2
 
 Install R/qtl2 from [CRAN](https://cran.r-project.org):
 
-    install.packages("qtl2")
+```r
+install.packages("qtl2")
+```
+
+Alternatively, install it from [R
+universe](https://rqtl.r-universe.dev):
+
+```r
+install.packages("qtl2", repos=c("https://rqtl.r-universe.dev",
+                                 "https://cloud.r-project.org"))
+```
+
+Or use [remotes](https://remotes.r-lib.org) to install it from its GitHub source:
+
+```r
+install.packages("remotes")
+remotes::install_github("rqtl/qtl2")
+```
 
 ---
 
@@ -46,6 +61,7 @@ Install R/qtl2 from [CRAN](https://cran.r-project.org):
 - [HMM benchmarks](https://kbroman.org/qtl2/assets/vignettes/hmm_benchmarks.html)
 - [Tutorial on R/qtl2](https://smcclatchy.github.io/mapping/) by [Susan McClatchy](https://github.com/smcclatchy) and
   [Dan Gatti](https://github.com/dmgatti)
+- [`scan1gen` examples](assets/vignettes/scan1gen.html)
 
 ---
 
