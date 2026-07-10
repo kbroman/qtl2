@@ -10,6 +10,13 @@ output:
 ```{r knitr_opts, include=FALSE}
 knitr::opts_chunk$set(fig.width=9, fig.height=5, warning=FALSE, message=FALSE)
 options(width=127, digits=5)
+
+# make sure packages are available
+library(qtl)
+library(qtl2)
+library(pscl)
+library(regress)
+library(sommer)
 ```
 
 In [R/qtl2](https://kbroman.org/qtl2) version
@@ -56,7 +63,7 @@ linear model for a binary phenotype, but with a probit link rather
 than a logit. We could use the R function `glm()`, as in the following.
 (Note that we allow just additive covariates.)
 
-```{r, ll_glm}
+```{r ll_glm}
 ll_glm <-
 function(pr, pheno, addcovar=NULL, ...)
 {
@@ -72,7 +79,7 @@ function(pr, pheno, addcovar=NULL, ...)
 Let's now use this function in `scan1gen`. First we load and prepare
 the `iron` dataset included with R/qtl2.
 
-```{r, prepare_iron_data}
+```{r prepare_iron_data}
 # load R/qtl2
 library(qtl2)
 
@@ -80,14 +87,19 @@ library(qtl2)
 iron <- read_cross2(system.file("extdata", "iron.zip", package="qtl2"))
 
 # insert pseudomarkers into map
-map <- insert_pseudomarkers(iron$gmap, step=1)
+iron_map <- insert_pseudomarkers(iron$gmap, step=1)
 
 # calculate genotype probabilities
-probs <- calc_genoprob(iron, map, error_prob=0.002)
+iron_probs <- calc_genoprob(iron, iron_map, error_prob=0.002)
 
 # covariates for X chr under null
 Xcovar <- get_x_covar(iron)
+```
 
+The `iron` dataset includes two phenotypes; we'll turn the first into
+a binary trait, 0 or 1 according to whether below or above the median.
+
+```{r iron_binary_trait}
 # create binary trait
 bin_pheno <- setNames(as.numeric(iron$pheno[,1] > median(iron$pheno[,1])),
                       rownames(iron$pheno))
@@ -96,23 +108,22 @@ bin_pheno <- setNames(as.numeric(iron$pheno[,1] > median(iron$pheno[,1])),
 We run `scan1gen` much like `scan1`:
 
 ```{r scan1gen_glm}
-out_probit <- scan1gen(probs, bin_pheno, Xcovar=Xcovar, func=ll_glm, cores=0)
+out_probit <- scan1gen(iron_probs, bin_pheno, Xcovar=Xcovar, func=ll_glm, cores=0)
 ```
 
 Compare this to the output of `scan1` with a logit model. The results
 are very small.
 
 ```{r iron_scan1}
-out_scan1 <- scan1(probs, bin_pheno, Xcovar=Xcovar, model="binary")
+out_scan1 <- scan1(iron_probs, bin_pheno, Xcovar=Xcovar, model="binary")
 
 par(mar=c(4.1,4.1,0.6,0.6))
-plot(out_probit - out_scan1, map, ylim=c(-0.05,0.05),
+plot(out_probit - out_scan1, iron_map, ylim=c(-0.05,0.05),
      ylab="LOD difference (probit - logit)")
 ```
 
-We could also try using `glm()` with a logit link, to see whether it
-gives the same results as `scan1()`.
-
+Let's also try using `glm()` with a logit link, to see whether it
+gives the same results as `scan1()`. It does.
 
 ```{r glm_logit}
 ll_glm_logit <-
@@ -126,10 +137,10 @@ function(pr, pheno, addcovar=NULL, ...)
     -glm_out$deviance/(2*log(10)) # log10 likelihood
 }
 
-out_logit <- scan1gen(probs, bin_pheno, Xcovar=Xcovar, func=ll_glm_logit, cores=0)
+out_logit <- scan1gen(iron_probs, bin_pheno, Xcovar=Xcovar, func=ll_glm_logit, cores=0)
 
 par(mar=c(4.1,4.1,0.6,0.6))
-plot(out_logit - out_scan1, map, ylim=c(-0.05,0.05),
+plot(out_logit - out_scan1, iron_map, ylim=c(-0.05,0.05),
      ylab="LOD difference (glm - scan1)")
 ```
 
@@ -149,9 +160,9 @@ To do the permutation test, we call `scan1perm` with
 significance thresholds.
 
 ```{r scan1perm_glm, eval=FALSE}
-operm <- scan1perm(probs, bin_pheno, Xcovar=Xcovar, n_perm=1000,
+operm <- scan1perm(iron_probs, bin_pheno, Xcovar=Xcovar, n_perm=1000,
                    perm_Xsp=TRUE, scan_func=scan1gen, func=ll_glm,
-                   chr_lengths=chr_lengths(map), cores=0)
+                   chr_lengths=chr_lengths(iron_map), cores=0)
 ```
 
 ```{r scan1perm_glm_really, echo=FALSE}
@@ -193,7 +204,7 @@ function(probs, pheno, addcovar=NULL, ...)
 }
 ```
 
-To illustrate the function, let's simulate some F2 data.
+To illustrate the function, let's simulate some F~2~ intercross data.
 Our model has two QTL, with one QTL affecting the proportion of
 individuals with 0 phenotype, and the other affecting the average
 phenotype for those with non-zero phenotype.
@@ -221,18 +232,44 @@ f2 <- convert2cross2(f2)
 We can run the genome scan as follows:
 
 ```{r scan1_0infl}
-map <- insert_pseudomarkers(f2$gmap, step=1)
-pr <- calc_genoprob(f2, map, err=0)
+f2_map <- insert_pseudomarkers(f2$gmap, step=1)
+f2_pr <- calc_genoprob(f2, f2_map, err=0)
 
-out_0infl <- scan1gen(pr, f2$pheno[,"count"], func=fit0infl, cores=0)
+out_0infl <- scan1gen(f2_pr, f2$pheno[,"count"], func=fit0infl, cores=0)
 ```
 
 Here's a plot of the results:
 
 ```{r plot_scan1_0infl}
 par(mar=c(5.1,4.1,0.6,0.6))
-plot(out_0infl, map)
+plot(out_0infl, f2_map)
 ```
+
+
+## regress package
+
+As a third example, let's try using the
+[regress](https://cran.r-project.org/package=regress) package
+to fit a polygenic model. While `scan1` in R/qtl2 estimates the
+polygenic variance under the null hypothesis of no QTL, and then takes
+it as fixed when scanning the genome, here we will re-estimate the
+residual polygenic variance at each QTL location.
+
+Here is our fitting function:
+
+```
+reg <- function(probs, pheno, addcovar=NULL, kinship, ...) {
+    formula <- ifelse(is.null(probs), "pheno~1", "pheno~probs")
+    K <- model.matrix(~rep(1, length(pheno)))
+
+    if(!is.null(addcovar)) formula <- paste(formula, "+ addcovar")
+
+    regress::regress(as.formula(formula), ~kinship, kernel=K)$llik/log(10)
+}
+```
+
+We'll use the `iron` dataset again.
+
 
 
 ## sommer package
@@ -241,11 +278,6 @@ As a third example, let's fit a random effects model for the QTL
 effect, using the [sommer](https://cran.r-project.org/package=sommer)
 package.
 
-
-## regress package
-
-We can also try using the
-[regress](https://cran.r-project.org/package=regress) package.
 
 
 
