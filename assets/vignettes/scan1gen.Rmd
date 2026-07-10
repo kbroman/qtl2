@@ -372,13 +372,13 @@ plot(out_regress - out_scan1, iron_map, lodcolumn=2, ylim=c(-0.25, 0.25))
 plot(out_regress_loco - out_scan1_loco, iron_map, lodcolumn=2, add=TRUE, lty=2)
 ```
 
-Finally, here's how to do a permutation test. We'll just use the "loco"
-method.
+Finally, here's how to do a permutation test. We'll just use the
+"loco" method. To save time, we'll just do 100 permutations.
 
 ```{r perms_regress_loco, eval=FALSE}
 operm_regress_loco <- scan1perm(iron_probs, iron$pheno, Xcovar=Xcovar,
                                 scan_func=scan1gen, func=fit_regress,
-                                kinship=k_loco, n_perm=1000, cores=0)
+                                kinship=k_loco, n_perm=100, cores=0)
 ```
 
 ```{r perms_regress_loco_really, echo=FALSE}
@@ -477,12 +477,13 @@ Here is a plot of the differences:
 plot(out_sommer - out_scan1[,mxphe], grav2_map, ylim=c(-0.2, 0.2))
 ```
 
-Here is how we would do a permutation test:
+Here is how we would do a permutation test. To save time, we'll just
+do 100 permutations.
 
 ```{r perms_sommer, eval=FALSE}
 operm_sommer <- scan1perm(grav2_probs, grav2$pheno[,mxphe], kinship=grav2_k,
                           scan_func=scan1gen, func=fit_sommer,
-                          n_perm=1000, cores=0)
+                          n_perm=100, cores=0)
 ```
 
 ```{r perms_sommer_really, echo=FALSE}
@@ -578,12 +579,12 @@ if(!file.exists(file)) {
 ```
 
 And to do a permutation test, we use `scan1perm` with
-`scan_func=scan1snps`.
+`scan_func=scan1snps`. We'll just do 100 permutations, to save time.
 
 ```{r perm_snps, eval=FALSE}
 operm_snps <- scan1perm(do_aprobs, map=do_pmap, pheno=do_pheno, kinship=do_k,
                         scan_func=scan1snps, query_func=query_variants,
-                        cores=0, n_perm=1000)
+                        cores=0, n_perm=100)
 ```
 
 ```{r perm_snps_really, echo=TRUE}
