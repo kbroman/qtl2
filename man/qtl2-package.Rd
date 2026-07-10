@@ -24,6 +24,7 @@ Provides a set of tools to perform quantitative trait locus (QTL) analysis in ex
 \item \href{https://kbroman.org/qtl2/assets/vignettes/developer_guide.html}{developer guide}
 \item \href{https://smcclatchy.github.io/mapping/}{Tutorial on R/qtl2} by
 \href{https://github.com/smcclatchy}{Susan McClatchy} and \href{https://github.com/dmgatti}{Dan Gatti}
+\item \href{https://kbroman.org/qtl2/assets/vignettes/scan1gen.html}{scan1gen examples}
 }
 }
 

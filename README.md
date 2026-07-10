@@ -61,6 +61,7 @@ remotes::install_github("rqtl/qtl2")
 - [HMM benchmarks](https://kbroman.org/qtl2/assets/vignettes/hmm_benchmarks.html)
 - [Tutorial on R/qtl2](https://smcclatchy.github.io/mapping/) by [Susan McClatchy](https://github.com/smcclatchy) and
   [Dan Gatti](https://github.com/dmgatti)
+- [`scan1gen` examples](assets/vignettes/scan1gen.html)
 
 ---
 

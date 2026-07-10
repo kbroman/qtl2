@@ -14,6 +14,7 @@
 #' * [developer guide](https://kbroman.org/qtl2/assets/vignettes/developer_guide.html)
 #' * [Tutorial on R/qtl2](https://smcclatchy.github.io/mapping/) by
 #'   [Susan McClatchy](https://github.com/smcclatchy) and [Dan Gatti](https://github.com/dmgatti)
+#' * [scan1gen examples](https://kbroman.org/qtl2/assets/vignettes/scan1gen.html)
 #'
 #' @section Related packages:
 #' * [qtl2convert](https://github.com/rqtl/qtl2convert), for converting
