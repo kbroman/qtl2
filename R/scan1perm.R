@@ -162,7 +162,8 @@
 #'                    scan_func=scan1snps, query_func=queryf, n_perm=3)
 #' }
 #'
-#' @seealso [scan1()], [chr_lengths()], [mat2strata()]
+#' @seealso [scan1()], [chr_lengths()], [mat2strata()], [scan1gen examples](https://kbroman.org/qtl2/assets/vignettes/scan1gen.html)
+#'
 #' @export
 scan1perm <-
     function(genoprobs, pheno, kinship=NULL, addcovar=NULL, Xcovar=NULL,

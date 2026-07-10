@@ -206,5 +206,5 @@ E (2008) Efficient control of population structure in model
 organism association mapping. Genetics 178:1709--1723.
 }
 \seealso{
-\code{\link[=scan1]{scan1()}}, \code{\link[=chr_lengths]{chr_lengths()}}, \code{\link[=mat2strata]{mat2strata()}}
+\code{\link[=scan1]{scan1()}}, \code{\link[=chr_lengths]{chr_lengths()}}, \code{\link[=mat2strata]{mat2strata()}}, \href{https://kbroman.org/qtl2/assets/vignettes/scan1gen.html}{scan1gen examples}
 }

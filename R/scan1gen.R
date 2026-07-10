@@ -63,7 +63,7 @@
 #' # perform genome scan using glm() with probit link function
 #' out <- scan1gen(probs, bin_pheno, Xcovar=Xcovar, func=ll_glm)
 #'
-#' @seealso [scan1()], [scan1perm()], [scan1max()]
+#' @seealso [scan1()], [scan1perm()], [scan1max()], [scan1gen examples](https://kbroman.org/qtl2/assets/vignettes/scan1gen.html)
 #'
 #' @export
 scan1gen <-

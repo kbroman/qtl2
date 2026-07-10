@@ -95,5 +95,5 @@ out <- scan1gen(probs, bin_pheno, Xcovar=Xcovar, func=ll_glm)
 
 }
 \seealso{
-\code{\link[=scan1]{scan1()}}, \code{\link[=scan1perm]{scan1perm()}}, \code{\link[=scan1max]{scan1max()}}
+\code{\link[=scan1]{scan1()}}, \code{\link[=scan1perm]{scan1perm()}}, \code{\link[=scan1max]{scan1max()}}, \href{https://kbroman.org/qtl2/assets/vignettes/scan1gen.html}{scan1gen examples}
 }
