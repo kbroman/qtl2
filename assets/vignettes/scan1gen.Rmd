@@ -166,10 +166,10 @@ operm <- scan1perm(iron_probs, bin_pheno, Xcovar=Xcovar, n_perm=1000,
 ```
 
 ```{r scan1perm_glm_really, echo=FALSE}
-set.seed(20260709)
 rds_file <- "scan1gen_cache/glm_perms.rds"
 if(!dir.exists("scan1gen_cache")) dir.create("scan1gen_cache")
 if(!file.exists(rds_file)) {
+    set.seed(20260709)
 <<scan1perm_glm>>
     saveRDS(operm, rds_file)
 } else {
@@ -253,9 +253,9 @@ operm_0infl <- scan1perm(f2_probs, f2$pheno[,"count"], scan_func=scan1gen,
 ```
 
 ```{r perms_0infl_really, echo=FALSE}
-set.seed(20260710)
 rds_file <- "scan1gen_cache/perms_0infl.rds"
 if(!file.exists(rds_file)) {
+    set.seed(20260710)
 <<perms_0infl>>
     saveRDS(operm_0infl, rds_file)
 } else {
@@ -366,6 +366,32 @@ plot(out_regress - out_scan1, iron_map, lodcolumn=2, ylim=c(-0.25, 0.25))
 plot(out_regress_loco - out_scan1_loco, iron_map, lodcolumn=2, add=TRUE, lty=2)
 ```
 
+Finally, here's how to do a permutation test. We'll just use the "loco"
+method.
+
+```{r perms_regress_loco, eval=FALSE}
+operm_regress_loco <- scan1perm(iron_probs, iron$pheno, Xcovar=Xcovar,
+                                scan_func=scan1gen, func=reg, kinship=k_loco,
+                                n_perm=1000, cores=0)
+```
+
+```{r perms_regress_loco_really, echo=FALSE}
+file <- "scan1gen_cache/perms_regress_loco.rds"
+if(!file.exists(file)) {
+    set.seed(20260720)
+<<perms_regress_loco>>
+    saveRDS(operm_regress_loco, file=file)
+} else {
+    operm_regress_loco <- readRDS(file)
+}
+```
+
+Here's the 5% significance threshold:
+
+```{r summary_perms_regress_loco}
+summary(operm_regress_loco)
+```
+
 
 ## sommer package
 
@@ -395,7 +421,7 @@ fit_sommer <- function(probs, pheno, addcovar=NULL, kinship, ...)
     }
     df <- cbind(df, id=rownames(pheno))
 
-    max(sommer::mmes(as.formula(formula), random=~vsm(ism(id), Gu=kinship), data=df,
+    max(sommer::mmes(as.formula(formula), random=~sommer::vsm(sommer::ism(id), Gu=kinship), data=df,
                      dateWarning=FALSE, verbose=FALSE)$llik)/log(10)
 }
 ```
@@ -454,9 +480,9 @@ operm_sommer <- scan1perm(grav2_probs, grav2$pheno[,mxphe], kinship=grav2_k,
 ```
 
 ```{r perms_sommer_really, echo=FALSE}
-set.seed(20260711)
 file <- "scan1gen_cache/perms_sommer.rds"
 if(!file.exists(file)) {
+    set.seed(20260711)
 <<perms_sommer>>
     saveRDS(operm_sommer, file)
 } else {
@@ -552,6 +578,17 @@ And to do a permutation test, we use `scan1perm` with
 operm_snps <- scan1perm(do_aprobs, map=do_pmap, pheno=do_pheno, kinship=do_k,
                         scan_func=scan1snps, query_func=query_variants,
                         cores=0, n_perm=1000)
+```
+
+```{r perm_snps_really, echo=TRUE}
+file <- "scan1gen_cache/operm_snps.rds"
+if(!file.exists(file)) {
+    set.seed(20250710)
+<<perm_snps>>
+    saveRDS(operm_snps, file)
+} else {
+    operm_snps <- readRDS(file)
+}
 ```
 
 Here's the 5% significance threshold:
