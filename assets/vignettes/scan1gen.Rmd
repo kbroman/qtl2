@@ -1,5 +1,5 @@
 ---
-title: scan1gen tutorial
+title: "`scan1gen` examples"
 output:
     html_document:
         toc: true
