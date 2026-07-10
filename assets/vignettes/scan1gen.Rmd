@@ -43,7 +43,7 @@ few examples.
 The R/qtl2 function
 [`scan1`](https://cran.r-project.org/web/packages/qtl2/refman/qtl2.html#scan1)
 is used to scan the genome, fitting a single-QTL model at each
-location, and comparing it to a NULL model (with no QTL). The output
+location, and comparing it to a null model (with no QTL). The output
 is a matrix of LOD scores, where the rows correspond to genomic
 positions and the columns correspond to phenotypes.
 But the available models are limited: you can fit a normal linear
