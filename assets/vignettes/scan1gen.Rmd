@@ -253,6 +253,7 @@ operm_0infl <- scan1perm(f2_probs, f2$pheno[,"count"], scan_func=scan1gen,
 ```
 
 ```{r perms_0infl_really, echo=FALSE}
+set.seed(20260710)
 rds_file <- "scan1gen_cache/perms_0infl.rds"
 if(!file.exists(rds_file)) {
 <<perms_0infl>>
@@ -421,7 +422,7 @@ Let's pick out just the phenotype with maximum LOD score, and use that
 with the sommer package:
 
 ```{r max_pheno_grav2}
-mxphe <- which.max(apply(out, 2, max))
+mxphe <- which.max(apply(out_scan1, 2, max))
 ```
 
 Now the genome scan with our fitting function that uses sommer:
@@ -435,7 +436,7 @@ Here are plots of the two:
 
 ```{r plot_grav2_scans}
 plot(out_scan1, grav2_map, lodcolumn=mxphe)
-plot(out_sommmer, grav2_map, add=TRUE, col="violetred")
+plot(out_sommer, grav2_map, add=TRUE, col="violetred")
 ```
 
 Here is a plot of the differences:
@@ -448,11 +449,12 @@ Here is how we would do a permutation test:
 
 ```{r perms_sommer, eval=FALSE}
 operm_sommer <- scan1perm(grav2_probs, grav2$pheno[,mxphe], kinship=grav2_k,
-                          scan_func=sacn1gen, func=fit_sommer,
+                          scan_func=scan1gen, func=fit_sommer,
                           n_perm=1000, cores=0)
 ```
 
 ```{r perms_sommer_really, echo=FALSE}
+set.seed(20260711)
 file <- "scan1gen_cache/perms_sommer.rds"
 if(!file.exists(file)) {
 <<perms_sommer>>
@@ -517,7 +519,46 @@ transformation.
 do_pheno <- sqrt(do$pheno[,1])
 ```
 
+To perform a SNP-based genome scan, we need access to a database of
+SNPs in the founder lines, available at
+[figshare](https://doi.org/10.6084/m9.figshare.5280229.v3). We then
+use `create_variant_query_func` to create a function that queries the database.
 
+```{r create_query_func}
+query_variants <- create_variant_query_func("~/Data/CCdb/cc_variants.sqlite")
+```
+
+To perform a SNP association scan, we use `scan1snps()`:
+
+```{r scan1snps, eval=FALSE}
+out_snps <- scan1snps(do_aprobs, map=do_pmap, pheno=do_pheno, kinship=do_k,
+                      query_func=query_variants, cores=0)
+```
+
+```{r scan1snps_really, echo=TRUE}
+file <- "scan1gen_cache/out_snps.rds"
+if(!file.exists(file)) {
+<<scan1snps>>
+    saveRDS(out_snps, file)
+} else {
+    out_snps <- readRDS(file)
+}
+```
+
+And to do a permutation test, we use `scan1perm` with
+`scan_func=scan1snps`:
+
+```{r perm_snps, eval=FALSE}
+operm_snps <- scan1perm(do_aprobs, map=do_pmap, pheno=do_pheno, kinship=do_k,
+                        scan_func=scan1snps, query_func=query_variants,
+                        cores=0, n_perm=1000)
+```
+
+Here's the 5% significance threshold:
+
+```{r summary_perm_snps}
+summary(operm_snps)
+```
 
 ---
 
