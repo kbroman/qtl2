@@ -233,9 +233,9 @@ We can run the genome scan as follows:
 
 ```{r scan1_0infl}
 f2_map <- insert_pseudomarkers(f2$gmap, step=1)
-f2_pr <- calc_genoprob(f2, f2_map, err=0)
+f2_probs <- calc_genoprob(f2, f2_map, err=0)
 
-out_0infl <- scan1gen(f2_pr, f2$pheno[,"count"], func=fit0infl, cores=0)
+out_0infl <- scan1gen(f2_probs, f2$pheno[,"count"], func=fit0infl, cores=0)
 ```
 
 Here's a plot of the results:
@@ -243,6 +243,29 @@ Here's a plot of the results:
 ```{r plot_scan1_0infl}
 par(mar=c(5.1,4.1,0.6,0.6))
 plot(out_0infl, f2_map)
+```
+
+We can perform a permutation test as we did with glm:
+
+```{r perms_0infl, eval=FALSE}
+operm_0infl <- scan1perm(f2_probs, f2$pheno[,"count"], scan_func=scan1gen,
+                         func=fit0infl, cores=0, n_perm=1000)
+```
+
+```{r perms_0infl_really, echo=FALSE}
+rds_file <- "scan1gen_cache/perms_0infl.rds"
+if(!file.exists(rds_file)) {
+<<perms_0infl>>
+    saveRDS(operm_0infl, rds_file)
+} else {
+    operm_0infl <- readRDS(rds_file)
+}
+```
+
+Here is the 5% significance threshold:
+
+```{r summary_perms_0infl}
+summary(operm_0infl)
 ```
 
 
