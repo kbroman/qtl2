@@ -368,22 +368,154 @@ plot(out_regress_loco - out_scan1_loco, iron_map, lodcolumn=2, add=TRUE, lty=2)
 
 ## sommer package
 
-As our final example of `scan`gen`, let's fit a random effects model for the QTL
-effect, using the [sommer](https://cran.r-project.org/package=sommer)
-package.
+As our final example of `scan`gen`, let's do basically the same thing
+as we did with the
+[regress](https://cran.r-project.org/package=regress) package, but
+using the [sommer](https://cran.r-project.org/package=sommer) package.
 
+Here's the fitting function:
 
+```{r fit_sommer}
+fit_sommer <- function(probs, pheno, addcovar=NULL, kinship, ...)
+{
+    df <- as.data.frame(pheno)
+    colnames(df) <- "pheno"
+
+    if(is.null(probs)) {
+        formula <- "pheno ~ 1"
+    } else {
+        df <- cbind(df, probs)
+        formula <- paste("pheno ~", paste(colnames(probs), collapse="+"))
+    }
+
+    if(!is.null(addcovar)) {
+        formula <- paste(formula, "+", paste(colnames(addcovar), collapse="+"))
+        df <- cbind(df, addcovar)
+    }
+    df <- cbind(df, id=rownames(pheno))
+
+    max(sommer::mmes(as.formula(formula), random=~vsm(ism(id), Gu=kinship), data=df,
+                     dateWarning=FALSE, verbose=FALSE)$llik)/log(10)
+}
+```
+
+Let's try using the `grav2` dataset included with R/qtl2. This is for
+a set of Arabidopsis recombinant inbred lines, with the outcome being
+a [gravitropism](https://en.wikipedia.org/wiki/Gravitropism) phenotype.
+
+```{r prep_grav2}
+grav2 <- read_cross2(system.file("extdata", "grav2.zip", package="qtl2"))
+grav2_map <- insert_pseudomarkers(grav2$gmap, step=1)
+grav2_probs <- calc_genoprob(grav2, grav2_map, cores=0)
+grav2_k <- calc_kinship(grav2_probs, "loco")
+```
+
+We'll first do genome scans for all phenotypes ("tip angle" at
+different times), using `scan1`.
+
+```{r grav2_scan1}
+out_scan1 <- scan1(grav2_probs, grav2$pheno, kinship=grav2_k, cores=0)
+```
+
+Let's pick out just the phenotype with maximum LOD score, and use that
+with the sommer package:
+
+```{r max_pheno_grav2}
+mxphe <- which.max(apply(out, 2, max))
+```
+
+Now the genome scan with our fitting function that uses sommer:
+
+```{r sommer_scan}
+out_sommer <- scan1gen(grav2_probs, grav2$pheno[, mxphe], kinship=grav2_k,
+                       func=fit_sommer, cores=0)
+```
+
+Here are plots of the two:
+
+```{r plot_grav2_scans}
+plot(out_scan1, grav2_map, lodcolumn=mxphe)
+plot(out_sommmer, grav2_map, add=TRUE, col="violetred")
+```
+
+Here is a plot of the differences:
+
+```{r plot_grav2_scans_diff}
+plot(out_sommer - out_scan1[,mxphe], grav2_map, ylim=c(-0.2, 0.2))
+```
+
+Here is how we would do a permutation test:
+
+```{r perms_sommer, eval=FALSE}
+operm_sommer <- scan1perm(grav2_probs, grav2$pheno[,mxphe], kinship=grav2_k,
+                          scan_func=sacn1gen, func=fit_sommer,
+                          n_perm=1000, cores=0)
+```
+
+```{r perms_sommer_really, echo=FALSE}
+file <- "scan1gen_cache/perms_sommer.rds"
+if(!file.exists(file)) {
+<<perms_sommer>>
+    saveRDS(operm_sommer, file)
+} else {
+    operm_sommer <- readRDS(file)
+}
+```
+
+And here is the 5% significance threshold:
+
+```{r perms_sommer_summary}
+summary(operm_sommer)
+```
+
+## Treatment of multiple phenotypes
+
+Just like `scan1`, the `scan1gen` function can handle multiple phenotypes.
+But we assume the user-supplied fitting function handles just a single
+phenotype, and we then call it repeatedly for each of the phenotype
+columns.
+
+You could, instead, handle the multiple phenotypes within the fitting
+function. In some cases, this can be done with considerable savings in
+computation time. The fitting function should then return a vector of
+LOD scores, one for each phenotype column, and when you call
+`scan1gen`, you should use `vectorize_func=FALSE`.
 
 
 ## Permutation tests with `scan1snps`
 
-Let's now turn to the use of permutation tests with general scan
-functions. The R/qtl2 function `scan1perm` is analogous to `scan1` but
-performs repeated scans with different permutations of the genotypes
-relative to the phenotypes, saving the genome-wide maximum of each.
-We have introduced an argument `scan_func` for using genome scan
-functions other than `scan1`. In particular, it can be used with
-`scan1snps` and with `scan1gen`.
+As a final example, we'll show how to use `scan1perm` with the
+`scan1snps` function: to do permutations when performing a SNP-by-SNP
+association scan in a multi-parent population.
+
+We'll consider the Diversity Outcross data from [Gatti et al.
+(2014)](https://doi.org/10.1534/g3.114.013748), available at the
+[qtl2data
+repository](https://github.com/rqtl/qtl2data/tree/main/DO_Gatti2014).
+
+First we load the data:
+
+```{r load_data}
+file <- "https://raw.githubusercontent.com/rqtl/qtl2data/main/DO_Gatti2014/do.zip"
+do <- read_cross2(file)
+```
+
+Let's calculate genotype probabilities and the "loco" kinship.
+
+```{r calc_probs_kinship}
+do_gmap <- insert_pseudomarkers(do$gmap, step=1)
+do_pmap <- interp_map(do_gmap, do$gmap, do$pmap)
+do_probs <- calc_genoprob(do, do_gmap, error_prob=0.002, cores=0)
+do_aprobs <- genoprob_to_alleleprob(do_probs, cores=0)
+do_k <- calc_kinship(do_aprobs, "loco", cores=0)
+```
+
+We'll consider just the WBC phenotype, and we'll use a square-root
+transformation.
+
+```{r do_pheno}
+do_pheno <- sqrt(do$pheno[,1])
+```
 
 
 
