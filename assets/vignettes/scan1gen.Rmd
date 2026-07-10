@@ -546,7 +546,7 @@ if(!file.exists(file)) {
 ```
 
 And to do a permutation test, we use `scan1perm` with
-`scan_func=scan1snps`:
+`scan_func=scan1snps`.
 
 ```{r perm_snps, eval=FALSE}
 operm_snps <- scan1perm(do_aprobs, map=do_pmap, pheno=do_pheno, kinship=do_k,
