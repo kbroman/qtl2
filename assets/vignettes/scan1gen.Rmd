@@ -7,6 +7,10 @@ output:
         toc_float: true
 ---
 
+
+<meta name="description" content="Examples of use of scan1gen for general genome scans in R/qtl2, as well as use of scan1gen and scan1snps in scan1perm.">
+<meta name="author" content="Karl Broman">
+
 ```{r knitr_opts, include=FALSE}
 knitr::opts_chunk$set(fig.width=9, fig.height=5, warning=FALSE, message=FALSE)
 options(width=127, digits=5)
