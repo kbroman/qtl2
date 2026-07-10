@@ -286,7 +286,9 @@ residual polygenic variance at each QTL location.
 Here is our fitting function:
 
 ```{r regress_fitter}
-reg <- function(probs, pheno, addcovar=NULL, kinship, ...) {
+fit_regress <-
+function(probs, pheno, addcovar=NULL, kinship, ...)
+{
     formula <- ifelse(is.null(probs), "pheno~1", "pheno~probs")
     K <- model.matrix(~rep(1, length(pheno)))
 
@@ -312,11 +314,11 @@ with the overall kinship or the "loco" kinship.
 out_scan1 <- scan1(iron_probs, iron$pheno, Xcovar=Xcovar, kinship=k,
                    cores=0)
 out_regress <- scan1gen(iron_probs, iron$pheno, Xcovar=Xcovar,
-                        func=reg, kinship=k, cores=0)
+                        func=fit_regress, kinship=k, cores=0)
 out_scan1_loco <- scan1(iron_probs, iron$pheno, Xcovar=Xcovar,
                         kinship=k_loco, cores=0)
 out_regress_loco <- scan1gen(iron_probs, iron$pheno, Xcovar=Xcovar,
-                             func=reg, kinship=k_loco, cores=0)
+                             func=fit_regress, kinship=k_loco, cores=0)
 ```
 
 ```{r regress_scan_really, echo=FALSE}
@@ -375,8 +377,8 @@ method.
 
 ```{r perms_regress_loco, eval=FALSE}
 operm_regress_loco <- scan1perm(iron_probs, iron$pheno, Xcovar=Xcovar,
-                                scan_func=scan1gen, func=reg, kinship=k_loco,
-                                n_perm=1000, cores=0)
+                                scan_func=scan1gen, func=fit_regress,
+                                kinship=k_loco, n_perm=1000, cores=0)
 ```
 
 ```{r perms_regress_loco_really, echo=FALSE}
