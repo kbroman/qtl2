@@ -13,8 +13,8 @@ navbar = File.readlines(navbar_file).join
 
 f = File.open(file)
 title = "" # to contain the title
-description = "" # to contain the title
-author = "" # to contain the title
+description = "" # to contain the description
+author = "" # to contain the author
 header = "" # to contain the head part of the file
 input = "" # to contain the middle part of the file
 
