@@ -568,7 +568,7 @@ out_snps <- scan1snps(do_aprobs, map=do_pmap, pheno=do_pheno, kinship=do_k,
                       query_func=query_variants, cores=0)
 ```
 
-```{r scan1snps_really, echo=TRUE}
+```{r scan1snps_really, echo=FALSE}
 file <- "scan1gen_cache/out_snps.rds"
 if(!file.exists(file)) {
 <<scan1snps>>
@@ -587,7 +587,7 @@ operm_snps <- scan1perm(do_aprobs, map=do_pmap, pheno=do_pheno, kinship=do_k,
                         cores=0, n_perm=100)
 ```
 
-```{r perm_snps_really, echo=TRUE}
+```{r perm_snps_really, echo=FALSE}
 file <- "scan1gen_cache/operm_snps.rds"
 if(!file.exists(file)) {
     set.seed(20250710)
