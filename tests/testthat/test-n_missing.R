@@ -25,17 +25,15 @@ test_that("n_missing and n_typed work for grav2", {
     expect_equal(n_missing(grav2[125:128,], sum="prop"), c("125"=2/234, "126"=3/234, "127"=4/234, "128"=1/234))
     expect_equal(n_typed(grav2[125:128,], sum="prop"), c("125"=232/234, "126"=231/234, "127"=230/234, "128"=233/234))
 
-    expected <- structure(c(1, 2, 2, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
-                            3, 0, 0, 1, 1, 0, 1, 0, 4, 0, 0, 0, 1, 0, 3, 0, 2, 3, 0, 1, 2,
-                            1, 4, 2, 3), .Names = c("AD.156C", "BF.325L", "GH.580L", "DF.225L",
-                                         "AD.77L", "CH.266C", "CH.610C", "HH.258C", "BH.145C", "BF.226C/BH.58L",
-                                         "FD.226C", "GD.145C", "GH.94L", "BF.82C", "GD.465C", "FD.306L",
-                                         "EC.495C-Col", "BH.460L", "FD.81L", "BF.105C", "CH.284C", "FD.222L-Col",
-                                         "CD.245L", "EG.66L", "CH.65C", "CH.1500C", "BF.221L", "FD.85C",
-                                         "GB.150L-Col", "FD.150C", "GD.460L-Col", "CC.332C", "Erecta",
-                                         "CH.145L-Col/150C", "AD.191L-Col", "BH.195L-Col", "GD.298C",
-                                         "GH.247L", "BH.120L-Col", "DF.140C", "EG.357C/359L-Col",
-                                         "EC.235L-Col/247C"))
+    expected <- c(AD.156C = 1, BF.325L = 2, GH.580L = 2, DF.225L = 0, AD.77L = 1,
+                  CH.266C = 1, CH.610C = 0, HH.258C = 0, BH.145C = 0, `BF.226C/BH.58L` = 0,
+                  FD.226C = 0, GD.145C = 0, GH.94L = 1, BF.82C = 0, GD.465C = 0,
+                  FD.306L = 0, `EC.495C-Col` = 0, BH.460L = 3, FD.81L = 0, BF.105C = 0,
+                  CH.284C = 1, `FD.222L-Col` = 1, CD.245L = 0, EG.66L = 1, CH.65C = 0,
+                  CH.1500C = 4, BF.221L = 0, FD.85C = 0, `GB.150L-Col` = 0, FD.150C = 1,
+                  `GD.460L-Col` = 0, CC.332C = 3, Erecta = 0, `CH.145L-Col/150C` = 2,
+                  `AD.191L-Col` = 3, `BH.195L-Col` = 0, GD.298C = 1, GH.247L = 2,
+                  `BH.120L-Col` = 1, DF.140C = 4, `EG.357C/359L-Col` = 2, `EC.235L-Col/247C` = 3)
     expect_equal(n_missing(grav2[,2], "mar"), expected)
 
 })
