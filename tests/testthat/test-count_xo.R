@@ -9,8 +9,8 @@ test_that("count_xo and locate_xo work for intercross", {
 
     n_xo <- count_xo(v)
     expected <- structure(c(2L, 0L, 3L, 2L, 0L, 1L, 0L, 2L, 0L, 1L, 0L, 0L, 0L,
-                            0L, 0L), .Dim = c(5L, 3L),
-                          .Dimnames = list(c("1", "2", "3", "4", "5"), c("7", "8", "X")))
+                            0L, 0L), dim = c(5L, 3L),
+                          dimnames = list(c("1", "2", "3", "4", "5"), c("7", "8", "X")))
     expect_equal(n_xo, expected)
 
     pos_xo <- locate_xo(v, iron$gmap)
@@ -49,8 +49,8 @@ test_that("count_xo and locate_xo work for intercross", {
                             0L, 0L, 2L, 3L, 3L, 2L, 1L, 3L, 0L, 2L, 0L, 3L, 0L, 0L, 0L, 0L,
                             0L, 2L, 0L, 3L, 2L, 0L, 3L, 0L, 2L, 0L, 3L, 0L, 1L, 0L, 0L, 1L,
                             2L, 2L, 3L, 2L, 1L, 2L, 0L, 2L, 0L, 3L, 0L, 0L, 0L, 0L, 1L),
-                          .Dim = c(5L, 3L, 4L), .Dimnames = list(c("1", "2", "3", "4", "5"),
-                                                                 c("7", "8", "X"), NULL))
+                          dim = c(5L, 3L, 4L), dimnames = list(c("1", "2", "3", "4", "5"),
+                                                               c("7", "8", "X"), NULL))
     expect_equal(n_xo, expected)
 
 })
