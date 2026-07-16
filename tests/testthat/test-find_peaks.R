@@ -22,14 +22,13 @@ test_that("find_peaks works", {
                                    lodcolumn = c("liver", "liver", "liver", "liver", "liver", "liver", "liver",
                                    "liver", "liver", "liver", "liver", "liver", "spleen", "spleen", "spleen"),
                                    chr = structure(c(1L, 2L, 4L, 7L, 7L, 8L, 11L, 13L, 15L, 16L, 17L, 19L, 8L, 9L, 10L),
-                                                   .Label = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11",
+                                                   levels = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11",
                                                               "12", "13", "14", "15", "16", "17", "18", "19", "X"), class = "factor"),
                                    pos = c(90.3, 56.8, 10.9, 25.1, 49.1, 41, 26, 32.5, 49.2, 28.6, 4.3, 38.3, 13.6, 56.6, 37),
                                    lod = c(2.53157055941134, 4.85599006729575, 2.74279943572619, 3.77915164598982, 4.42062344751016,
                                    3.49656665028876, 2.61495248604883, 3.40360749696547, 4.03706766736211, 6.35264382891418,
                                    2.71848298281312, 3.0383533142527, 5.35976176735248, 12.5986057120873, 2.23257885452713)),
-                              .Names = c("lodindex", "lodcolumn", "chr", "pos", "lod"), row.names = c(NA, 15L),
-                              class = "data.frame")
+                              row.names = c(NA, 15L), class = "data.frame")
 
     expect_equal(find_peaks(out, map, 2, 1), expected_2_1)
 
@@ -134,12 +133,11 @@ test_that("find_peaks works", {
     # test that find_peaks works if there are no peaks above threshold
     blank_output <- structure(list(lodindex = numeric(0),
                                    lodcolumn = character(0),
-                                   chr = structure(integer(0), .Label = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+                                   chr = structure(integer(0), levels = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
                                                                           "11", "12", "13", "14", "15", "16", "17", "18", "19", "X"),
                                                    class = "factor"),
                                    pos = numeric(0),
                                    lod = numeric(0)),
-                              .Names = c("lodindex", "lodcolumn", "chr", "pos", "lod"),
                               row.names = integer(0), class = "data.frame")
 
     expect_equal( find_peaks(out, map, threshold=9999), blank_output)
@@ -148,14 +146,13 @@ test_that("find_peaks works", {
     # like above, but also requesting LOD or Bayes intervals
     blank_output <- structure(list(lodindex = numeric(0),
                                    lodcolumn = character(0),
-                                   chr = structure(integer(0), .Label = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
+                                   chr = structure(integer(0), levels = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
                                                                           "11", "12", "13", "14", "15", "16", "17", "18", "19", "X"),
                                                    class = "factor"),
                                    pos = numeric(0),
                                    lod = numeric(0),
                                    ci_lo = numeric(0),
                                    ci_hi = numeric(0)),
-                              .Names = c("lodindex", "lodcolumn", "chr", "pos", "lod", "ci_lo", "ci_hi"),
                               row.names = integer(0), class = "data.frame")
 
     expect_equal( find_peaks(out, map, threshold=9999, drop=2), blank_output)
