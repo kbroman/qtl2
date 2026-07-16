@@ -11,12 +11,10 @@ test_that("can read grav2 data", {
                    "is_x_chr", "pheno", "phenocovar"))
 
     # check summary
-    expected <- structure(list(crosstype = "riself", nind = 162L, nind_geno=162L, nind_pheno=162L, nind_gnp=162L,
-                               nchr = 5L, nmar = structure(c(26, 42, 64, 35, 67),
-                                          .Names = c("1", "2", "3", "4", "5")),
-                               npheno = 241L, ncovar = 0, nphenocovar = 1L,
-                               totmar = 234), .Names = c("crosstype", "nind", "nind_geno", "nind_pheno", "nind_gnp",
-                                              "nchr", "nmar", "npheno", "ncovar", "nphenocovar", "totmar"),
+    expected <- structure(list(crosstype = "riself", nind = 162L, nind_geno = 162L,
+                               nind_pheno = 162L, nind_gnp = 162L, nchr = 5L,
+                               nmar = c(`1` = 26, `2` = 42, `3` = 64, `4` = 35, `5` = 67),
+                               npheno = 241L, ncovar = 0, nphenocovar = 1L, totmar = 234),
                           class = c("summary.cross2", "list"))
     expect_equal(summary(grav2), expected)
 
@@ -37,14 +35,13 @@ test_that("can read iron data", {
                    "is_female", "is_x_chr", "pheno", "phenocovar", "pmap"))
 
     # check summary
-    expected <- structure(list(crosstype = "f2", nind = 284L, nind_geno = 284L, nind_pheno = 284L, nind_gnp = 284L,
-                               nchr = 20L, nmar = structure(c(3, 5, 2, 2, 2, 2, 7, 8, 5,
-                                           2, 7, 2, 2, 2, 2, 5, 2, 2, 2, 2),
-                                           .Names = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-                                           "11", "12", "13", "14", "15", "16", "17", "18", "19", "X")),
+    expected <- structure(list(crosstype = "f2", nind = 284L, nind_geno = 284L,
+                               nind_pheno = 284L, nind_gnp = 284L, nchr = 20L,
+                               nmar = c(`1` = 3, `2` = 5, `3` = 2, `4` = 2, `5` = 2, `6` = 2, `7` = 7, `8` = 8,
+                                        `9` = 5, `10` = 2, `11` = 7, `12` = 2, `13` = 2, `14` = 2,
+                                        `15` = 2, `16` = 5, `17` = 2, `18` = 2, `19` = 2, X = 2),
                                npheno = 2L, ncovar = 2L, nphenocovar = 1L, totmar = 66),
-                          .Names = c("crosstype", "nind", "nind_geno", "nind_pheno", "nind_gnp", "nchr", "nmar", "npheno", "ncovar",
-                          "nphenocovar", "totmar"), class = c("summary.cross2", "list"))
+                          class = c("summary.cross2", "list"))
     expect_equal(summary(iron), expected)
 
 
