@@ -6,8 +6,7 @@ test_that("create_gene_query_func works", {
     dbfile <- system.file("extdata", "mouse_genes_small.sqlite", package="qtl2")
     qf <- create_gene_query_func(dbfile)
 
-    expected <- structure(list(chr = c("2", "2", "2"),
-                               source = c("MGI", "MGI", "MGI"),
+    expected <- structure(list(chr = c("2", "2", "2"), source = c("MGI", "MGI", "MGI"),
                                type = c("gene", "gene", "pseudogene"),
                                start = c(96.318169, 97.626967, 97.947953),
                                stop = c(97.631672, 97.627052, 97.949756),
@@ -18,16 +17,13 @@ test_that("create_gene_query_func works", {
                                Name = c("Lrrc4c", "Gm44320", "Gm13803"),
                                Parent = c(NA_character_, NA_character_, NA_character_),
                                Dbxref = c("NCBI_Gene:241568,ENSEMBL:ENSMUSG00000050587",
-                                          "ENSEMBL:ENSMUSG00000105133",
-                                          "NCBI_Gene:621146,ENSEMBL:ENSMUSG00000082820"),
+                                          "ENSEMBL:ENSMUSG00000105133", "NCBI_Gene:621146,ENSEMBL:ENSMUSG00000082820"),
                                gene_id = c("MGI:2442636", "MGI:5690712", "MGI:3651056"),
                                mgi_type = c("protein coding gene", "miRNA gene", "pseudogene"),
-                               description=c("leucine rich repeat containing 4C",
-                                             "predicted gene%2c 44320",
-                                             "predicted gene 13803")),
-                          .Names = c("chr", "source", "type", "start", "stop", "score", "strand",
-                                     "phase", "ID", "Name", "Parent", "Dbxref", "gene_id", "mgi_type", "description"),
+                               description = c("leucine rich repeat containing 4C", "predicted gene%2c 44320",
+                                               "predicted gene 13803")),
                           row.names = c(NA, -3L), class = "data.frame")
+
     expect_equal(qf(2, 97.5, 98.0), expected)
 
     # use db connection
