@@ -7,7 +7,6 @@ test_that("find_index_snp works", {
                               snp = c("m1", "m2", "m3", "m4"), index = c(1L, 1L, 1L, 2L),
                               interval = c(91L, 91L, 236L, 236L),
                               on_map = c(FALSE, FALSE, FALSE, FALSE)),
-                         .Names = c("chr", "pos", "sdp", "snp", "index", "interval", "on_map"),
                          row.names = c("m1", "m2", "m3", "m4"), class = "data.frame")
 
     expect_equal(find_index_snp(snpinfo, "m2"), "m1")
