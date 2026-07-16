@@ -29,7 +29,6 @@ test_that("compare_maps works", {
                                pos_map1 = c(69.9, NA, 51.4, 43.7, 53.6),
                                chr_map2 = c(NA, "7", "10", "9", "9"),
                                pos_map2 = c(NA, 44.201096, 86.377953, 101.52887, 89.977078)),
-                          .Names = c("marker", "chr_map1", "pos_map1", "chr_map2", "pos_map2"),
                           row.names = c(NA, 5L), class = "data.frame")
 
     expect_equal(compare_maps(gmap, pmap), expected)
