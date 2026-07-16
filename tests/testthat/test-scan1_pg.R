@@ -613,7 +613,7 @@ test_that("scan1 with weights and kinship", {
     # }
     hsq <- structure(c(0.281878438466624, 0.353558919335662, 0.354315217715963,
                        0.20945078570429, 0.217671918799751, 0.201682575651958),
-                     .Dim = 3:2, .Dimnames = list(c("7", "12", "X"), c("liver", "spleen")))
+                     dim = 3:2, dimnames = list(c("7", "12", "X"), c("liver", "spleen")))
 
     expect_equal(attr(out_reml, "hsq"), hsq, tol=1e-5)
 
@@ -687,22 +687,22 @@ test_that("scan1 with weights and kinship", {
                           1.69690361501555, 1.56240479342725, 1.4020247631517,
                           1.23069582035597, 1.06561266027339, 0.920732232061234,
                           0.803561188099648, 0.715279174632663, 0.690066084958058),
-                        .Dim = c(57L, 2L),
-                        .Dimnames = list(c("D7Mit74", "c7.loc4", "c7.loc6", "c7.loc9",
-                                           "c7.loc11", "D7Mit25", "c7.loc14", "c7.loc16",
-                                           "c7.loc19", "c7.loc21", "D7Nds5", "c7.loc24",
-                                           "c7.loc26", "D7mit30", "c7.loc29", "c7.loc31",
-                                           "D7Mit31", "c7.loc34", "c7.loc36", "D7Mit17",
-                                           "c7.loc39", "c7.loc41", "c7.loc44", "c7.loc46",
-                                           "c7.loc49", "c7.loc51", "D7Mit71", "D12Mit88",
-                                           "c12.loc22", "c12.loc25", "c12.loc27", "c12.loc30",
-                                           "c12.loc32", "c12.loc35", "c12.loc37", "c12.loc40",
-                                           "c12.loc42", "c12.loc45", "c12.loc47", "c12.loc50",
-                                           "c12.loc52", "c12.loc55", "c12.loc57", "D12Mit134",
-                                           "DXMit16", "cX.loc32", "cX.loc34", "cX.loc37",
-                                           "cX.loc40", "cX.loc42", "cX.loc44", "cX.loc47",
-                                           "cX.loc50", "cX.loc52", "cX.loc54",
-                                           "cX.loc57", "DXMit186"), c("liver", "spleen")),
+                        dim = c(57L, 2L),
+                        dimnames = list(c("D7Mit74", "c7.loc4", "c7.loc6", "c7.loc9",
+                                          "c7.loc11", "D7Mit25", "c7.loc14", "c7.loc16",
+                                          "c7.loc19", "c7.loc21", "D7Nds5", "c7.loc24",
+                                          "c7.loc26", "D7mit30", "c7.loc29", "c7.loc31",
+                                          "D7Mit31", "c7.loc34", "c7.loc36", "D7Mit17",
+                                          "c7.loc39", "c7.loc41", "c7.loc44", "c7.loc46",
+                                          "c7.loc49", "c7.loc51", "D7Mit71", "D12Mit88",
+                                          "c12.loc22", "c12.loc25", "c12.loc27", "c12.loc30",
+                                          "c12.loc32", "c12.loc35", "c12.loc37", "c12.loc40",
+                                          "c12.loc42", "c12.loc45", "c12.loc47", "c12.loc50",
+                                          "c12.loc52", "c12.loc55", "c12.loc57", "D12Mit134",
+                                          "DXMit16", "cX.loc32", "cX.loc34", "cX.loc37",
+                                          "cX.loc40", "cX.loc42", "cX.loc44", "cX.loc47",
+                                          "cX.loc50", "cX.loc52", "cX.loc54",
+                                          "cX.loc57", "DXMit186"), c("liver", "spleen")),
                         class = c("scan1", "matrix"))
 
     for(at in c("hsq", "sample_size"))
