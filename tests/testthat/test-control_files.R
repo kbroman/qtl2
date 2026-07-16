@@ -20,13 +20,10 @@ test_that("write_control_file gives correct output for riself", {
     # read it back in
     control <-  read_control_file(file)
 
-    expected <- structure(list(crosstype = "riself", geno = "grav2_geno.csv",
-                               pheno = "grav2_pheno.csv", phenocovar = "grav2_phenocovar.csv",
-                               gmap = "grav2_gmap.csv", alleles = c("L", "C"),
-                               genotypes = structure(list(L = 1L, C = 2L), .Names = c("L", "C")),
-                               sep=",", na.strings = c("-", "NA"), comment.char="#"),
-                          .Names = c("crosstype", "geno", "pheno", "phenocovar",
-                          "gmap", "alleles", "genotypes", "sep", "na.strings", "comment.char"))
+    expected <- list(crosstype = "riself", geno = "grav2_geno.csv", pheno = "grav2_pheno.csv",
+                     phenocovar = "grav2_phenocovar.csv", gmap = "grav2_gmap.csv",
+                     alleles = c("L", "C"), genotypes = list(L = 1L, C = 2L),
+                     sep = ",", na.strings = c("-", "NA"), comment.char = "#")
 
     expect_equal(sort(names(control)), sort(names(expected)))
     expected <- expected[names(control)]
@@ -55,14 +52,10 @@ test_that("write_control_file in JSON for riself", {
     # read it back in
     control <-  read_control_file(file)
 
-    expected <- structure(list(crosstype = "riself", geno = "grav2_geno.csv",
-                               pheno = "grav2_pheno.csv", phenocovar = "grav2_phenocovar.csv",
-                               gmap = "grav2_gmap.csv", alleles = c("L", "C"),
-                               genotypes = structure(list(L = 1L, C = 2L), .Names = c("L", "C")),
-                               sep=",",
-                               na.strings = c("-", "NA"), comment.char="#"),
-                          .Names = c("crosstype", "geno", "pheno", "phenocovar",
-                          "gmap", "alleles", "genotypes", "sep", "na.strings", "comment.char"))
+    expected <- list(crosstype = "riself", geno = "grav2_geno.csv", pheno = "grav2_pheno.csv",
+                     phenocovar = "grav2_phenocovar.csv", gmap = "grav2_gmap.csv",
+                     alleles = c("L", "C"), genotypes = list(L = 1L, C = 2L),
+                     sep = ",", na.strings = c("-", "NA"), comment.char = "#")
 
     expect_equal(sort(names(control)), sort(names(expected)))
     expected <- expected[names(control)]
@@ -97,18 +90,13 @@ test_that("write_control_file gives correct output for intercross", {
     # read it back in
     control <-  read_control_file(file)
 
-    expected <- structure(list(crosstype = "f2", geno = "iron_geno.csv", pheno = "iron_pheno.csv",
-                               phenocovar = "iron_phenocovar.csv", covar = "iron_covar.csv",
-                               gmap = "iron_gmap.csv", alleles = c("S", "B"),
-                               genotypes = structure(list(SS = 1L, SB = 2L, BB = 3L), .Names = c("SS", "SB", "BB")),
-                               sex = structure(list(covar = "sex", f = "female", m = "male"),
-                               .Names = c("covar", "f", "m")),
-                               cross_info = structure(list(covar = "cross_direction", `(SxB)x(SxB)` = 0L, `(BxS)x(BxS)` = 1L),
-                               .Names = c("covar", "(SxB)x(SxB)", "(BxS)x(BxS)")),
-                               x_chr = "X", sep=",", na.strings = c("-", "NA"), comment.char="#"),
-                          .Names = c("crosstype", "geno", "pheno", "phenocovar",
-                          "covar", "gmap", "alleles", "genotypes", "sex", "cross_info",
-                          "x_chr", "sep", "na.strings", "comment.char"))
+    expected <- list(crosstype = "f2", geno = "iron_geno.csv", pheno = "iron_pheno.csv",
+                     phenocovar = "iron_phenocovar.csv", covar = "iron_covar.csv",
+                     gmap = "iron_gmap.csv", alleles = c("S", "B"),
+                     genotypes = list(SS = 1L, SB = 2L, BB = 3L),
+                     sex = list(covar = "sex", f = "female", m = "male"),
+                     cross_info = list(covar = "cross_direction", `(SxB)x(SxB)` = 0L, `(BxS)x(BxS)` = 1L),
+                     x_chr = "X", sep = ",", na.strings = c("-", "NA"), comment.char = "#")
 
     expect_equal(sort(names(control)), sort(names(expected)))
     expected <- expected[names(control)]
@@ -143,18 +131,13 @@ test_that("write_control_file in JSON intercross", {
     # read it back in
     control <-  read_control_file(file)
 
-    expected <- structure(list(crosstype = "f2", geno = "iron_geno.csv", pheno = "iron_pheno.csv",
-                               phenocovar = "iron_phenocovar.csv", covar = "iron_covar.csv",
-                               gmap = "iron_gmap.csv", alleles = c("S", "B"),
-                               genotypes = structure(list(SS = 1L, SB = 2L, BB = 3L), .Names = c("SS", "SB", "BB")),
-                               sex = structure(list(covar = "sex", f = "female", m = "male"),
-                               .Names = c("covar", "f", "m")),
-                               cross_info = structure(list(covar = "cross_direction", `(SxB)x(SxB)` = 0L, `(BxS)x(BxS)` = 1L),
-                               .Names = c("covar", "(SxB)x(SxB)", "(BxS)x(BxS)")),
-                               x_chr = "X", sep=",", na.strings = c("-", "NA"), comment.char="#"),
-                          .Names = c("crosstype", "geno", "pheno", "phenocovar",
-                          "covar", "gmap", "alleles", "genotypes", "sex", "cross_info",
-                          "x_chr", "sep", "na.strings", "comment.char"))
+    expected <- list(crosstype = "f2", geno = "iron_geno.csv", pheno = "iron_pheno.csv",
+                     phenocovar = "iron_phenocovar.csv", covar = "iron_covar.csv",
+                     gmap = "iron_gmap.csv", alleles = c("S", "B"),
+                     genotypes = list(SS = 1L, SB = 2L, BB = 3L),
+                     sex = list(covar = "sex", f = "female", m = "male"),
+                     cross_info = list(covar = "cross_direction", `(SxB)x(SxB)` = 0L, `(BxS)x(BxS)` = 1L),
+                     x_chr = "X", sep = ",", na.strings = c("-", "NA"), comment.char = "#")
 
     expect_equal(sort(names(control)), sort(names(expected)))
     expected <- expected[names(control)]
