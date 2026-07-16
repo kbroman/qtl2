@@ -20,9 +20,6 @@ test_that("create_variant_query_func works", {
                                PWK_PhJ = c(1L, 2L, 2L),
                                WSB_EiJ = c(1L, 1L, 1L),
                                type = c("snp", "snp", "snp")),
-                          .Names = c("snp", "chr", "pos", "alleles", "sdp", "ensembl_gene", "consequence",
-                                     "A_J", "C57BL_6J", "129S1_SvImJ", "NOD_ShiLtJ", "NZO_HlLtJ", "CAST_EiJ", "PWK_PhJ", "WSB_EiJ",
-                                     "type"),
                           row.names = c(NA, -3L), class = "data.frame")
 
     expect_equal(qf(2, 97.3, 97.3002), expected)
