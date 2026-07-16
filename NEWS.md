@@ -1,8 +1,10 @@
-## qtl2 0.45-1 (2026-07-07)
+## qtl2 0.45-2 (2026-07-16)
 
 ### Bug fixes
 
 - Small correction to code for plot_genes tests
+
+- Small changes to tests to avoid Notes on CRAN
 
 
 ## qtl2 0.44 (2026-07-06)
