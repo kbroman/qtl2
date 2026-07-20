@@ -57,3 +57,20 @@ test_that("chr_lengths works", {
     expect_equal(collapse_chr_lengths_to_AX(only_A, c(TRUE,FALSE)), expected)
 
 })
+
+test_that("chr_lengths works on cross2 objects", {
+
+    iron <- read_cross2(system.file("extdata", "iron.zip", package="qtl2"))
+
+    expect_equal(chr_lengths(iron$gmap), chr_lengths(iron))
+
+    # if no genetic map, use physical map and give warning
+    iron$gmap <- NULL
+    expect_warning(result <- chr_lengths(iron))
+    expect_equal(chr_lengths(iron$pmap), result)
+
+    # if no map, give error
+    iron$pmap <- NULL
+    expect_error(chr_lengths(iron))
+
+})

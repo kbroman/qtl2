@@ -7,7 +7,8 @@
 chr_lengths(map, collapse_to_AX = FALSE)
 }
 \arguments{
-\item{map}{A list of vectors, each specifying locations of the markers.}
+\item{map}{A list of vectors, each specifying locations of the markers.
+Can also be a cross2 object, in which case the genetic map (if present) is used.}
 
 \item{collapse_to_AX}{If TRUE, collapse to the total lengths of the
 autosomes and X chromosome.}

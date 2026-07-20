@@ -3,6 +3,8 @@
 #' Calculate chromosome lengths for a map object
 #'
 #' @param map A list of vectors, each specifying locations of the markers.
+#' Can also be a cross2 object, in which case the genetic map (if present) is used.
+#'
 #' @param collapse_to_AX If TRUE, collapse to the total lengths of the
 #' autosomes and X chromosome.
 #'
@@ -18,6 +20,17 @@ chr_lengths <-
     function(map, collapse_to_AX=FALSE)
 {
     if(is.null(map)) stop("map is NULL")
+
+    if(is.cross2(map)) {
+        if("gmap" %in% names(map)) {
+            map <- map$gmap
+        } else if("pmap" %in% names(map)) {
+            warning("input is a cross2 object that has no genetic map; using physical map")
+            map <- map$pmap
+        } else {
+            stop("input is a cross2 object that has neither a genetic not physical map")
+        }
+    }
 
     result <- vapply(map, function(a) diff(range(a, na.rm=TRUE)), 1)
     attr(result, "is_x_chr") <- attr(map, "is_x_chr")

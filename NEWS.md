@@ -1,4 +1,9 @@
-## qtl2 0.45-2 (2026-07-16)
+## qtl2 0.45-3 (2026-07-20)
+
+### Minor changes
+
+- `chr_lengths()` now works on `"cross2"` objects (takes genetic map
+  if present, physical map if not; gives error if there's no map)
 
 ### Bug fixes
 
