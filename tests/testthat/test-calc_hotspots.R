@@ -6,7 +6,7 @@ test_that("calc_hotspots works", {
 
     url <- "https://kbroman.org/qtl2/assets/sampledata/pqtl_data.RData"
     tempfile <- file.path(tempdir(), basename(url))
-    download.file(url, tempfile)
+    download.file(url, tempfile, quiet=TRUE)
     load(tempfile)
     unlink(tempfile)
 
