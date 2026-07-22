@@ -36,5 +36,6 @@ pages/rqtl2_functions.Rmd: ruby/annotate_functions.rb ../qtl2/NAMESPACE
 	$^
 
 pages/rqtl2_functions.html: pages/rqtl2_functions.Rmd
-	cd $(<D);R $(R_OPTS) -e "rmarkdown::render('$(<F)')"
+	cat $< ruby/ccby_footer.md > $(<D)/tmp.Rmd
+	cd $(<D);R $(R_OPTS) -e "rmarkdown::render('tmp.Rmd')";mv tmp.html $(@F);rm tmp.Rmd
 	ruby/add_navbar.rb $@ ruby/pages_head.html ruby/pages_navbar.html
