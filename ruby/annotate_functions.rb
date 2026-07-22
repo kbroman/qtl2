@@ -18,7 +18,7 @@ if !File.exist?(mdfile)
     f.print("title: R/qtl2 functions\n")
     f.print("description: Annotated/categorized list of functions in R/qtl2\n")
     f.print("---\n\n")
-    f.print("### Other functions\n\n")
+    f.print("### Newly added functions (in development version)\n\n")
     f.close()
 end
 
